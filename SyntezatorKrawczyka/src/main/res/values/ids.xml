@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="PrzyciskiGrid" type="id"/>
+    <item name="action_edytujDzwieki" type="id"/>
+    <item name="action_wymiary" type="id"/>
+
+    <item name="action_OtworzPlik" type="id"/>
+    <item name="action_Logowanie" type="id"/>
+    <item name="edycjaDzwieku" type="id"/>
+    <item name="wymiary" type="id"/><item name="wymiaryKolumny" type="id"/><item name="wymiaryWiersze" type="id"/>
+
+
+    <item name="email" type="id"/>
+    <item name="password" type="id"/>
+    <item name="login" type="id"/>
+    <item name="login_form" type="id"/>
+    <item name="login_status" type="id"/>
+    <item name="login_status_message" type="id"/>
+    <item name="sign_in_button" type="id"/>
+
+
+</resources>
