@@ -71,10 +71,15 @@ public class MainActivity extends ActionBarActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+        android.R.drawable.ic_dialog_alert.
+try{
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.logowanie, menu);
         return true;
+}catch(Throwable e){
+    getMenuInflater().inflate(R.menu.main, menu);
+}
+        return false;
     }
     boolean edytujDźwięk=false;
     @Override
