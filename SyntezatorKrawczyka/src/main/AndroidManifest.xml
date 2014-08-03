@@ -24,6 +24,10 @@
             android:name="com.jaebe.syntezatorkrawczyka.Logowanie"
             android:label="Logowanie" >
         </activity>
+        <activity
+            android:name="com.jaebe.syntezatorkrawczyka.Ustawienia"
+            android:label="@string/title_activity_ustawienia" >
+        </activity>
     </application>
 
 </manifest>

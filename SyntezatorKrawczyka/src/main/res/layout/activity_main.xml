@@ -33,8 +33,15 @@
             android:layout_alignParentLeft="false"
             android:layout_alignWithParentIfMissing="false"
             android:layout_centerInParent="true"
-            android:visibility="visible">
+            android:visibility="invisible">
+<ListView android:layout_height="50dp"
+    android:layout_width="60dp"></ListView>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/edycjaDzwiekuOk" />
         </TableLayout><TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

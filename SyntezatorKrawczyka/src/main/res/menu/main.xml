@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- <item android:id="@+id/action_edytujDzwieki"
+    <item android:id="@+id/action_edytujDzwieki"
          android:title="Edytuj dżwięki"
          android:orderInCategory="100"
          app:showAsAction="never" />
@@ -14,9 +14,9 @@
      <item android:id="@+id/action_Logowanie"
          android:title="Logowanie"
          android:orderInCategory="102"
-         app:showAsAction="n" />
+         app:showAsAction="always" />
      <item android:id="@+id/action_OtworzPlik"
          android:title="Otworz Plik"
          android:orderInCategory="105"
-         app:showAsAction="never" />-->
+         app:showAsAction="never" />
 </menu>

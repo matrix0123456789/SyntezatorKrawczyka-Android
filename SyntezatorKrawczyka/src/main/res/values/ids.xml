@@ -16,6 +16,7 @@
     <item name="login_form" type="id"/>
     <item name="login_status" type="id"/>
     <item name="login_status_message" type="id"/>
+    <item name="edycjaDzwiekuOk" type="id"/>
     <item name="sign_in_button" type="id"/>
 
 

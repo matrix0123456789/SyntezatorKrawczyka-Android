@@ -3,7 +3,6 @@ package com.jaebe.syntezatorkrawczyka;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     short ilePrzyciskówKolumn=4;
     short ilePrzyciskówWierszy=4;
 
@@ -21,8 +20,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         try{
-
             super.onCreate(savedInstanceState);
+
         }catch(Throwable e){}
         setContentView(R.layout.activity_main);
 
@@ -30,6 +29,13 @@ public class MainActivity extends ActionBarActivity {
             rysujPrzyciski();
         }
         catch(Throwable e){}
+        ((Button)  findViewById(R.id.edycjaDzwiekuOk)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ( (TableLayout)findViewById(R.id.edycjaDzwieku)).setVisibility(View.INVISIBLE);
+            }
+        });
 
     }
 
@@ -50,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
                     public void onClick(View view) {
                         if(edytujDźwięk)
                         {
-
+                            ( (TableLayout)findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -71,15 +77,13 @@ public class MainActivity extends ActionBarActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        android.R.drawable.ic_dialog_alert.
-try{
+
+
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.logowanie, menu);
-        return true;
-}catch(Throwable e){
+
     getMenuInflater().inflate(R.menu.main, menu);
-}
-        return false;
+
+        return true;
     }
     boolean edytujDźwięk=false;
     @Override
