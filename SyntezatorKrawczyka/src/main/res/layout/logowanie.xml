@@ -1,4 +1,4 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -10,8 +10,8 @@
     android:layout_height="fill_parent">
 
 
-<!--
-    <TableLayout
+
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -19,8 +19,6 @@
 
         <EditText
             android:id="@+id/email"
-            android:singleLine="true"
-            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -28,15 +26,10 @@
 
         <EditText
             android:id="@+id/password"
-            android:singleLine="true"
-            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeActionId="@+id/login"
-            android:imeOptions="actionUnspecified" />
+            android:inputType="textPassword" />
 
         <Button android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
@@ -47,6 +40,6 @@
             android:paddingRight="32dp"
             android:layout_gravity="right" />
 
-    </TableLayout>-->
+    </LinearLayout>
 </ScrollView>
-</TableLayout>
+</LinearLayout>
