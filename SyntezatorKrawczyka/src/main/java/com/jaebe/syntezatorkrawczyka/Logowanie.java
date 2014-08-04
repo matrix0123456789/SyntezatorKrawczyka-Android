@@ -16,7 +16,7 @@ public class Logowanie extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.logowanie);
+        setContentView(R.id.login_form);
 
     }
 
