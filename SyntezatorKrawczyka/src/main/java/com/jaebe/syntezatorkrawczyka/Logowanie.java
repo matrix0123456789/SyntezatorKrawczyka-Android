@@ -3,6 +3,9 @@ package com.jaebe.syntezatorkrawczyka;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 /**
@@ -18,6 +21,15 @@ public class Logowanie extends Activity {
 
 
         setContentView(R.layout.logowanie);
+        ((Button)findViewById(R.id.sign_in_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Statyczne.serwer.loguj(((EditText)findViewById(R.id.email)).getText().toString(), ((EditText)findViewById(R.id.password)).getText().toString()).equals("ok"))
+                {
+                    ((View)findViewById(R.id.logowanie)).setVisibility(View.INVISIBLE);
+                }
+            }
+        });
 
     }
 

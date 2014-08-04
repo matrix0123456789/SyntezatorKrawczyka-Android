@@ -46,6 +46,6 @@ public class PolaczenieHTTP {
         return "blad";
 
     }
-    final static Pattern Regexlogowanie =  Pattern.compile("{\"status\":\"([^\"]*)\"(,\"id\":\"([0-9]+)\")?}");
+    final static Pattern Regexlogowanie =  Pattern.compile("\\{\"status\":\"([^\"]*)\"(,\"id\":\"([0-9]+)\")?\\}");
     final static Pattern RegexUtwory = Pattern.compile("\"utwory\":\\[(.*)\\]");
 }

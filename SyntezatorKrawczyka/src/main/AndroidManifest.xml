@@ -28,6 +28,8 @@
             android:name="com.jaebe.syntezatorkrawczyka.Ustawienia"
             android:label="@string/title_activity_ustawienia" >
         </activity>
+
     </application>
+<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 </manifest>

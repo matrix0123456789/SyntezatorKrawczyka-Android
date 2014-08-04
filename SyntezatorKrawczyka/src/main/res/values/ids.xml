@@ -12,6 +12,7 @@
 
     <item name="email" type="id"/>
     <item name="password" type="id"/>
+    <item name="logowanie" type="id"/>
     <item name="login" type="id"/>
     <item name="login_form" type="id"/>
     <item name="login_status" type="id"/>
