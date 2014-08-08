@@ -4,6 +4,7 @@ package com.jaebe.syntezatorkrawczyka;
  * Created by Mateusz on 28.07.14.
  */
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,14 +21,17 @@ public class PolaczenieHTTP {
     public String loguj(String login, String haslo)
     {
         try{
+            String toBase="{\"login\":\"" + login + "\",\"haslo\":\"" + haslo + "\"}";
+            String base=Base64.encode(toBase);
             Socket soc = new Socket("syntezator.aq.pl", 80);
             OutputStream output = soc.getOutputStream();
             InputStream input = soc.getInputStream();
             output.write(("POST /json.php HTTP/1.1\r\n" +
                     "Host: syntezator.aq.pl\r\n" +
+                    "Content-Type: application/x-www-form-urlencoded\r\n" +
                     "User-Agent: Syntezator Krawczyka (Android)\r\n" +
-                    "\r\nb=" + "{\"login\":\"" + login + "\",\"haslo\":\"" + haslo + "\"}").getBytes());
-            output.close();
+                    "\r\nb=" + base).getBytes());
+
             Scanner sc=new Scanner(input);
             String linia;
             while(( linia=sc.nextLine()).length()>2)
@@ -35,12 +39,15 @@ public class PolaczenieHTTP {
 
             }
             String ret=sc.nextLine();
+            output.close();
             Matcher match=Regexlogowanie.matcher(ret);
             String odp=match.group(1);
             return odp;
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }catch (Throwable e) {
             e.printStackTrace();
         }
         return "blad";
