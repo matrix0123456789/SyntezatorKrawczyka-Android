@@ -11,7 +11,7 @@ public class sound extends Hashtable<String, moduł>
 {
 public soundStart sekw;
 public String nazwa;
-public Instrument UI;
+//public Instrument UI;
 public sound() { }
 public Node xml;
 public sound(String nazwa, Node n)

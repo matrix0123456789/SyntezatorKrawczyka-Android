@@ -101,10 +101,3 @@ public float[] generujJedenPrzebieg(long długość)
         }
 
         }
-interface FalaNiestandardowa
-{
-    float[] generujJedenPrzebieg(long długość);
- public Node xml=null;
-    public String nazwa =null;
-    public ArrayList<Integer> gpgpu=null ;
-}

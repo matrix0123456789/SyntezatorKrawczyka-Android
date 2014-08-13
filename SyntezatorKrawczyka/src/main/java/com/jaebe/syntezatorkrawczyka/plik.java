@@ -146,7 +146,7 @@ NodeList el=xml.getElementsByTagName("track");
                     try
                     {
                         // ((sekwencer)moduły[sound]["<sekwencer"]).sciezkaa = scie;
-                        scie.sekw = (moduły[elem[i2]].sekw);
+                        scie.sekw = (moduły.get(elem[i2]).sekw);
                         break;
                     }
                     catch (Throwable e) { }
@@ -312,103 +312,108 @@ sound z=(sound)modT[i];
     }
     void dekoduj1(Node n)
     {
-        if (n.getAttributes().getNamedItem("type").Value == "syntezator-krawczyka")
+        if (n.getAttributes().getNamedItem("type").getNodeValue().equals("syntezator-krawczyka"))
         {
-            moduły.add(n.getAttributes().getNamedItem("id").Value, new sound(n.getAttributes().getNamedItem("id").Value, n));
-            foreach (Node nn in n.ChildNodes)
+            moduły.put(n.getAttributes().getNamedItem("id").getNodeValue(), new sound(n.getAttributes().getNamedItem("id").getNodeValue(), n));
+
+                    for(int i=0;i<n.getChildNodes().getLength();i++)
             {
-                if (nn.Name == "module")
+                Node nn=n.getChildNodes().item(i);
+                if (nn.getNodeName().equals("module"))
                 {
-                    switch (nn.getAttributes().getNamedItem("type").Value)
+                    switch (nn.getAttributes().getNamedItem("type").getNodeValue())
                     {
                         case "sekwencer":
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].sekw = new sekwencer();
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, moduły[n.getAttributes().getNamedItem("id").Value].sekw as sekwencer);
-                            // moduły[n.getAttributes().getNamedItem("id").Value]["<sekwencer"] = moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value];
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw = new sekwencer();
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sekwencer);
+                            // moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())["<sekwencer"] = moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()];
                             break;
                         case "player":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new player());
-                            moduły[n.getAttributes().getNamedItem("id").Value]["<player"] = moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value];
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new player());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put("<player", moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()));
                             break;
                         case "granie":
                             var gr = new granie();
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, gr);
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), gr);
                             // granieLista.add(gr);
                             break;
                         case "oscylator":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new oscylator());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new oscylator());
                             break;
                         case "flanger":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new flanger());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new flanger());
                             break;
                         case "rozdzielacz":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new rozdzielacz());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new rozdzielacz());
                             break;
                         case "mikser":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new mikser());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new mikser());
                             break;
                         case "lfo":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new lfo());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new lfo());
                             break;
                         case "zmianaWysokości":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new zmianaWysokości());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new zmianaWysokości());
                             break;
                         case "glosnosc":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new glosnosc());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new glosnosc());
                             break;
                         case "poglos":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new pogłos());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new pogłos());
                             break;
                         case "cutoff":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new cutoff());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new cutoff());
                             break;
                         case "generatorObwiedniFiltru":
 
 
-                            moduły[n.getAttributes().getNamedItem("id").Value].add(nn.getAttributes().getNamedItem("id").Value, new generatorObwiedniFiltru());
+                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new generatorObwiedniFiltru());
                             break;
                         default:
                             continue;
                     }
-                    moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value].XML = nn;
-                    if (moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value].ustawienia == null)
+                    moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].XML = nn;
+                    if (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].ustawienia == null)
                     { }
-                    modułFunkcje.czytajXML(moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value].ustawienia, nn);
-                    moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value].akt();
+                    modułFunkcje.czytajXML(moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].ustawienia, nn);
+                    moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].akt();
                 }
             }
         }
-        else if (n.getAttributes().getNamedItem("type").Value == "samples")
+        else if (n.getAttributes().getNamedItem("type").getNodeValue().equals("samples"))
         {
-            moduły.add(n.getAttributes().getNamedItem("id").Value, new sound(n.getAttributes().getNamedItem("id").Value, n));
-            moduły[n.getAttributes().getNamedItem("id").Value].sekw = new sampler();
+            moduły.put(n.getAttributes().getNamedItem("id").Value, new sound(n.getAttributes().getNamedItem("id").Value, n));
+            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw = new sampler();
             if (n.getAttributes().getNamedItem("volume") != null)
-                (moduły[n.getAttributes().getNamedItem("id").Value].sekw as sampler).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
-            foreach (Node nn in n.ChildNodes)
+                (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sampler).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
+
+            for(int i=0;i<n.getChildNodes().getLength();i++)
             {
-                if (nn.Name == "sample")
+                Node nn=n.getChildNodes().item(i);
+
+                if (nn.getNodeName() == "sample")
                 {
                     sample sam;
                     if (nn.getAttributes().getNamedItem("file") != null)
@@ -424,39 +429,40 @@ sound z=(sound)modT[i];
                             sam.note = float.Parse(nn.getAttributes().getNamedItem("note").Value, CultureInfo.InvariantCulture);
                         if (nn.getAttributes().getNamedItem("accept") != null)
                             sam.accept = float.Parse(nn.getAttributes().getNamedItem("accept").Value, CultureInfo.InvariantCulture);
-                        (moduły[n.getAttributes().getNamedItem("id").Value].sekw as sampler).sample.add(sam);
+                        (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sampler).sample.add(sam);
                     }
 
                 }
             }
         }
-        else if (n.getAttributes().getNamedItem("type").Value == "midi")
+        else if (n.getAttributes().getNamedItem("type").getNodeValue() == "midi")
         {
-            moduły.add(n.getAttributes().getNamedItem("id").Value, new sound(n.getAttributes().getNamedItem("id").Value, n));
-            moduły[n.getAttributes().getNamedItem("id").Value].sekw = new InstrumentMidi();
+            moduły.put(n.getAttributes().getNamedItem("id").getNodeValue(), new sound(n.getAttributes().getNamedItem("id").Value, n));
+            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw = new InstrumentMidi();
             if (n.getAttributes().getNamedItem("volume") != null)
-                (moduły[n.getAttributes().getNamedItem("id").Value].sekw as sampler).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
+                (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sampler).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
 
         }
     }
     void dekoduj2(Node n)
     {
-        if (n.getAttributes().getNamedItem("type").Value == "syntezator-krawczyka")
+        if (n.getAttributes().getNamedItem("type").getNodeValue() == "syntezator-krawczyka")
         {
-            foreach (Node nn in n.ChildNodes)
+            for(int i=0;i<n.getChildNodes().getLength();i++)
             {
-                if (nn.Name == "module")
+                Node nn=n.getChildNodes().item(i);
+                if (nn.getNodeName() == "module")
                 {
 
                     if (nn.getAttributes().getNamedItem("output") != null)
                     {
-                        string[] exp = nn.getAttributes().getNamedItem("output").Value.Split(' ');
-                        for (int az = 0; az < exp.Length; az++)
+                        String[] exp = nn.getAttributes().getNamedItem("output").getNodeValue().Split(' ');
+                        for (int az = 0; az < exp.length; az++)
                         {
                             try
                             {
-                                moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value].wyjście[az].DrógiModół = moduły[n.getAttributes().getNamedItem("id").Value][exp[az]];
-                                moduły[n.getAttributes().getNamedItem("id").Value][exp[az]].wejście.add(new Typ(moduły[n.getAttributes().getNamedItem("id").Value][nn.getAttributes().getNamedItem("id").Value]));
+                                moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()).wyjście[az].DrógiModół = moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[exp[az]];
+                                moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(exp[az]).wejście.add(new Typ(moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()]));
                             }
                             catch (Throwable e) { }
                         }
@@ -467,7 +473,7 @@ sound z=(sound)modT[i];
         }
     }
 
-    internal void nowaScierzka()
+   /* void nowaScierzka()
     {
         var scierzkaXML = Statyczne.otwartyplik.xml.CreateElement("track");
         var atrybut1 = Statyczne.otwartyplik.xml.CreateAttribute("id");
@@ -500,8 +506,8 @@ sound z=(sound)modT[i];
         sciezka scie = new sciezka(id, scierzkaXML, true);
         scie.oryginał = org;
         sciezki.add(scie);
-    }
-    internal void grajStart()
+    }*/
+    /*internal void grajStart()
     {
         granie.graniePrzy = 0;
 
@@ -579,9 +585,9 @@ sound z=(sound)modT[i];
 
             }
         }
-    }
+    }*/
 
-    public void generuj()
+   /* public void generuj()
     {
         try
         {
@@ -630,7 +636,7 @@ sound z=(sound)modT[i];
             granie.PlikDoZapisu = dialog.FileName;
         }
         catch (Exception e1) { MessageBox.Show("Błąd przy zapisie dźwięku", e1.ToString()); }
-    }
+    }    */
 
 
 }

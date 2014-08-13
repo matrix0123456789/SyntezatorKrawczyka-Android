@@ -4,21 +4,6 @@ import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 
-/**
- * Created by Mateusz on 08.08.14.
- */
-interface IodDo
-{
-    public long getDelay();
-    public long getDlugosc();
-
-}
-interface wejście
-{
-   // UIElement UI{get;}
-   public soundStart sekw=null;
-   public void działaj();
-}
 public class sciezka implements wejście, IodDo
         {
 /// <summary>
@@ -126,14 +111,14 @@ public long getDelay()
 
 public int CompareTo(sciezka other)
         {
-        if (delay - other.delay > 0)
+        if (getDelay() - other.getDelay() > 0)
         return 1;
         else
         return -1;
         }
 
 public sciezka oryginał;
-public long getdlugosc()
+public long getDlugosc()
 
 
         {
@@ -143,7 +128,6 @@ public long getdlugosc()
         if (nuty.get(i).opuznienie + nuty.get(i).ilepróbekNaStarcie > akt)
         akt = nuty.get(i).opuznienie + nuty.get(i).długość;
         }
-        return akt-delay;
-        }
+        return akt-getDelay();
         }
         }
