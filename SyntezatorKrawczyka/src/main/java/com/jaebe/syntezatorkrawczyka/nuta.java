@@ -1,5 +1,7 @@
 package com.jaebe.syntezatorkrawczyka;
 
+import java.util.Date;
+import java.util.Hashtable;
 import java.util.Random;
 
 /// <summary>
@@ -28,7 +30,7 @@ public long opuznienie = 0;
 static int ilenut = 0;
 public static int getNowyid(){return ilenut++;}
 public long wygenerowanoWcześniej = 0;
-public Stopwatch start;
+public Date start;
 /// <summary>
 /// identyfikator
 /// </summary>
@@ -56,13 +58,13 @@ public float balans0 = 1;
 public float balans1 = 1;
 public byte kopiaInnaId = 0;///<summary>Zawiera liczbę jaka jest dodawana do id np. przy pogłosie</summary>
 public soundStart sekw;
-public Dictionary<long, gra> grająLokalne;
+public Hashtable<Long, gra> grająLokalne;
 public Boolean czyGotowe = false;
 //public static
 public nuta()
         {
         idOryginalne=id = ilenut++;
-        start = System.Diagnostics.Stopwatch.StartNew();
+        start =new Date();
 
         }
 
@@ -70,9 +72,8 @@ public nuta()
 /// tworzy klon, ze zmienionym id, nie kopiuje danych dźwiękowych
 /// </summary>
 /// <returns>klon</returns>
-public Object Clone()
-        {
-        return MemberwiseClone();
+public Object Clone() throws CloneNotSupportedException {
+        return clone();
         }
 
 public nuta(double ilepróbek, long długość)
@@ -80,7 +81,7 @@ public nuta(double ilepróbek, long długość)
         this.ilepróbek=ilepróbekNaStarcie = ilepróbek;
         this.długość = długość;
         idOryginalne=id = ilenut++;
-        start = System.Diagnostics.Stopwatch.StartNew();
+        start = new Date();
         }
 public nuta(double ilepróbek, long długość, long opuznienie)
         {
@@ -88,15 +89,14 @@ public nuta(double ilepróbek, long długość, long opuznienie)
         this.długość = długość;
         this.opuznienie = opuznienie;
         idOryginalne= id = ilenut++;
-        start = System.Diagnostics.Stopwatch.StartNew();
+            start = new Date();
 
         }
 
-        object Clone(short oktawy)
-        {
-        object ret = MemberwiseClone();
+        nuta Clone(short oktawy) throws CloneNotSupportedException {
+        nuta ret = (nuta)clone();
 
-        ((nuta)ret).ilepróbek = ((nuta)ret).ilepróbek / (Math.pow(2, oktawy));
+        ret.ilepróbek = ret.ilepróbek / (Math.pow(2, oktawy));
         return ret;
         }
 
