@@ -10,7 +10,7 @@ import java.util.ArrayList;
 interface FalaNiestandardowa
 {
     float[] generujJedenPrzebieg(long długość);
- public Node xml=null;
-    public String nazwa =null;
-    public ArrayList<Integer> gpgpu=null ;
+ public Node getXml();
+    public String getNazwa();
+    public ArrayList<Integer> getGpgpu() ;
 }

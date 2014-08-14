@@ -6,6 +6,6 @@ package com.jaebe.syntezatorkrawczyka;
 interface wejście
 {
    // UIElement UI{get;}
-   public soundStart sekw=null;
+   public soundStart getSekw();
    public void działaj();
 }

@@ -5,6 +5,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -32,7 +36,7 @@ public class plik {
 
     public plik(String a, boolean czyXML)
     {
-        if (a != "")
+        if (!a.equals(""))
         {
             this.URL = URLStatyczne  = a;
             try
@@ -41,6 +45,7 @@ public class plik {
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
                 xml = dBuilder.parse(new InputSource(new StringReader(a)));
+
             }
             catch (Throwable e)
             {
@@ -128,7 +133,7 @@ NodeList el=xml.getElementsByTagName("track");
                         for(int i2=0;i2<n.getChildNodes().getLength();i2++)
                 {
                     Node nutax=n.getChildNodes().item(i2);
-                    if (nutax.getNodeName() == "nute")
+                    if (nutax.getNodeName().equals("nute"))
                     {
                         try
                         {
@@ -244,24 +249,29 @@ sound z=(sound)modT[i];
     /// </summary>
     void uaktualnij()
     {
-        foreach (var x in moduły)
+        for(int i=0;i<moduły.size();i++)
         {
-            foreach (var y in x.Value)
+            String key=moduły.keys().nextElement();
+            for(int i2=0;i2<moduły.get(key).size();i2++)
             {
-                modułFunkcje.zapiszXML(y.Value.ustawienia, y.Value.XML);
+                String key2=moduły.get(key).keys().nextElement();
+                moduł y=moduły.get(key).get(key2);
+                modułFunkcje.zapiszXML(y.getUstawienia(), y.getXML());
+
             }
         }
-        var listaWave = xml.GetElementsByTagName("wave");
-        for (var i = listaWave.Count - 1; i >= 0; i--)
+        NodeList listaWave = xml.getElementsByTagName("wave");
+        for (int i = listaWave.getLength() - 1; i >= 0; i--)
         {
-            listaWave.Item(i).ParentNode.RemoveChild(listaWave.Item(i));
+            listaWave.item(i).getParentNode().removeChild(listaWave.item(i));
         }
-        foreach (var x in fale)
+        for(int i=0;i<fale.size();i++)
         {
-            xml.DocumentElement.AppendChild(x.Value.xml);
+            xml.getDocumentElement().appendChild(fale.elements().nextElement().xml);
+
         }
     }
-    public void zapisz()
+   /* public void zapisz()
     {
         uaktualnij();
         Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
@@ -273,21 +283,20 @@ sound z=(sound)modT[i];
             zapis.Write(xml.OuterXml);
             zapis.Close();
         }
-    }
-    public void zapisz(string path)
-    {
+    }*/
+    public void zapisz(String path) throws IOException {
         uaktualnij();
 
-        System.IO.StreamWriter zapis = new System.IO.StreamWriter(path);
-        zapis.Write(xml.OuterXml);
-        zapis.Close();
 
+        OutputStreamWriter zapis=new OutputStreamWriter(new FileOutputStream(path));
+        zapis.write(xml.toString());//TODO sprawdzić czy działa
+        zapis.close();
     }
-    public byte[] zapiszDoZmiennej()
+   /* public byte[] zapiszDoZmiennej()
     {
         uaktualnij();
         return System.Text.Encoding.UTF8.GetBytes(xml.OuterXml);
-    }
+    }*/
     public void dekoduj(NodeList a)
     {
                 for(int i=0;i<a.getLength();i++)
@@ -336,7 +345,7 @@ sound z=(sound)modT[i];
                             moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put("<player", moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()));
                             break;
                         case "granie":
-                            var gr = new granie();
+                            granie gr = new granie();
 
                             moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), gr);
                             // granieLista.add(gr);
@@ -394,20 +403,20 @@ sound z=(sound)modT[i];
                         default:
                             continue;
                     }
-                    moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].XML = nn;
-                    if (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].ustawienia == null)
+                    moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()).XML = nn;
+                    if (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()).ustawienia == null)
                     { }
-                    modułFunkcje.czytajXML(moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].ustawienia, nn);
-                    moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()].akt();
+                    modułFunkcje.czytajXML(moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()).ustawienia, nn);
+                    moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()).akt();
                 }
             }
         }
         else if (n.getAttributes().getNamedItem("type").getNodeValue().equals("samples"))
         {
-            moduły.put(n.getAttributes().getNamedItem("id").Value, new sound(n.getAttributes().getNamedItem("id").Value, n));
+            moduły.put(n.getAttributes().getNamedItem("id").getNodeValue(), new sound(n.getAttributes().getNamedItem("id").Value, n));
             moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw = new sampler();
             if (n.getAttributes().getNamedItem("volume") != null)
-                (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sampler).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
+                ((sampler)moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
 
             for(int i=0;i<n.getChildNodes().getLength();i++)
             {
@@ -418,18 +427,18 @@ sound z=(sound)modT[i];
                     sample sam;
                     if (nn.getAttributes().getNamedItem("file") != null)
                     {
-                        if (wszytskieSamplePliki.containsKey(nn.getAttributes().getNamedItem("file").Value))
-                            sam = wszytskieSamplePliki[nn.getAttributes().getNamedItem("file").Value];
+                        if (wszytskieSamplePliki.containsKey(nn.getAttributes().getNamedItem("file").getNodeValue()))
+                            sam = wszytskieSamplePliki[nn.getAttributes().getNamedItem("file").getNodeValue()];
                         else
                         {
-                            sam = new sample(nn.getAttributes().getNamedItem("file").Value);
-                            wszytskieSamplePliki.add(nn.getAttributes().getNamedItem("file").Value, sam);
+                            sam = new sample(nn.getAttributes().getNamedItem("file").getNodeValue());
+                            wszytskieSamplePliki.add(nn.getAttributes().getNamedItem("file").getNodeValue(), sam);
                         }
                         if (nn.getAttributes().getNamedItem("note") != null)
-                            sam.note = float.Parse(nn.getAttributes().getNamedItem("note").Value, CultureInfo.InvariantCulture);
+                            sam.note = Float.parseFloat(nn.getAttributes().getNamedItem("note").getNodeValue());
                         if (nn.getAttributes().getNamedItem("accept") != null)
-                            sam.accept = float.Parse(nn.getAttributes().getNamedItem("accept").Value, CultureInfo.InvariantCulture);
-                        (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sampler).sample.add(sam);
+                            sam.accept = Float.parseFloat(nn.getAttributes().getNamedItem("accept").getNodeValue());
+                        ((sampler)moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw).sample.add(sam);
                     }
 
                 }
@@ -437,10 +446,10 @@ sound z=(sound)modT[i];
         }
         else if (n.getAttributes().getNamedItem("type").getNodeValue() == "midi")
         {
-            moduły.put(n.getAttributes().getNamedItem("id").getNodeValue(), new sound(n.getAttributes().getNamedItem("id").Value, n));
+            moduły.put(n.getAttributes().getNamedItem("id").getNodeValue(), new sound(n.getAttributes().getNamedItem("id").getNodeValue(), n));
             moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw = new InstrumentMidi();
             if (n.getAttributes().getNamedItem("volume") != null)
-                (moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw as sampler).głośność = float.Parse(n.getAttributes().getNamedItem("volume").Value, CultureInfo.InvariantCulture);
+                ((sampler)moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).sekw).głośność = float.Parse(n.getAttributes().getNamedItem("volume").getNodeValue());
 
         }
     }
@@ -456,13 +465,13 @@ sound z=(sound)modT[i];
 
                     if (nn.getAttributes().getNamedItem("output") != null)
                     {
-                        String[] exp = nn.getAttributes().getNamedItem("output").getNodeValue().Split(' ');
+                        String[] exp = nn.getAttributes().getNamedItem("output").getNodeValue().split(" ");
                         for (int az = 0; az < exp.length; az++)
                         {
                             try
                             {
                                 moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue()).wyjście[az].DrógiModół = moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[exp[az]];
-                                moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(exp[az]).wejście.add(new Typ(moduły.get(n.getAttributes().getNamedItem("id").getNodeValue())[nn.getAttributes().getNamedItem("id").getNodeValue()]));
+                                moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(exp[az]).wejście.add(new Typ(moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).get(nn.getAttributes().getNamedItem("id").getNodeValue())));
                             }
                             catch (Throwable e) { }
                         }

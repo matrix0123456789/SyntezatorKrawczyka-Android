@@ -16,14 +16,17 @@ public interface moduł
     {
         get;
     }*/
-    ArrayList<Typ> wejście=new ArrayList<Typ>();
+    ArrayList<Typ> getWejście();
     /// <summary>
     /// Elementy, do których dalej będą przekazywane dane
     /// </summary>
-    Typ[] wyjście=new Typ[8];
-
-    Hashtable<String,String> ustawienia=new Hashtable<String,String>();
-    Node XML =null;
+    Typ[] getWyjście();
+    Hashtable<String,String> getUstawienia();
+    void setUstawienia(Hashtable<String,String> u);
+    Node getXML();
+    void getXML(Node n);
+    //Hashtable<String,String> ustawienia=new Hashtable<String,String>();
+    //public Node XML =null;
     /*void aktXML()
     {
 
