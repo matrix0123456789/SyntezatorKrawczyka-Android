@@ -62,28 +62,24 @@ public void działaj()
         {
         synchronized (granie.grają)
         {
-        granie.liczbaGenerowanychMax += nuty.Count;
-        granie.liczbaGenerowanych += nuty.Count;
-        foreach (var prz in nuty)
-        {
-        var tabl = (nuta)prz.Clone();
-        tabl.grajDo = long.MaxValue;
-        System.Threading.ThreadPool.QueueUserWorkItem((o) =>
-        {
-        if (sekw != null)
+        granie.liczbaGenerowanychMax += nuty.size();
+        granie.liczbaGenerowanych += nuty.size();
 
-        sekw.działaj(tabl);
-        lock (granie.liczbaGenerowanychBlokada)
-        {
-        granie.liczbaGenerowanych--;
-        if (!granie.można && granie.liczbaGenerowanych == 0)
+                for(int i=0;i<nuty.size();i++)
+        {try{
+            nuta prz=nuty.get(i);
+        nuta tabl = (nuta)prz.Clone();
+        tabl.grajDo = Long.MAX_VALUE;
+        //System.Threading.ThreadPool.QueueUserWorkItem((o) =>
+        //{
+            wątek1 wątek=new wątek1(tabl);
+            wątek.start();
 
-        granie.grajcale(false);
-        }
-        }, tabl);
-        }
-        }
-        }
+        //}, tabl);
+        }catch(Throwable e2){
+          e2.printStackTrace();
+        }}
+        }}
 
 private Long _delay = null;
 public long getDelay()
@@ -130,4 +126,25 @@ public long getDlugosc()
         }
         return akt-getDelay();
         }
+            class wątek1 extends Thread{
+                public wątek1(nuta t)
+                {
+                    tablWątek=t;
+                }
+                @Override
+                public void run() {
+                    { if (sekw != null)
+
+                        sekw.działaj(tablWątek);
+                        synchronized (granie.liczbaGenerowanychBlokada)
+                        {
+                            granie.liczbaGenerowanych--;
+                            if (!granie.można && granie.liczbaGenerowanych == 0)
+
+                                granie.grajcale(false);
+                        }
+                    }
+                }
+                public nuta tablWątek;
+            }
         }

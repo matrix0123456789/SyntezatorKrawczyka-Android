@@ -31,20 +31,10 @@ public long symuluj(long wej)
         {
         return wej;
         }
-public List<Typ> wejście { get; set; }
-public Typ[] wyjście
-        {
-        get { return _wyjście; }
-        }
-        Typ[] _wyjście;
-public Dictionary<string, string> ustawienia
-        {
-        get { return _ustawienia; }
-        }
 public static bool grateraz = false;
         Dictionary<string, string> _ustawienia;
 static float[] pustaTablica = new float[0];
-public static void grajcale(bool graj)
+public static void grajcale(boolean graj)
         {
         grateraz = false;
         long oz = 0;
@@ -141,19 +131,16 @@ public static void grajcale(bool graj)
         //}
         //});
         }
-static DateTime data;
+static Date data;
 public static int liczbaGenerowanych = 0;
 public static int liczbaGenerowanychMax = 0;
-public static object liczbaGenerowanychBlokada = new object();
-public static object obLock = new object();
-public static bool można = true;
+public static Object liczbaGenerowanychBlokada = new Object();
+public static Object obLock = new Object();
+public static boolean można = true;
 public granie()
         {
         graniestart();
-        wejście = new List<Typ>();
-        _wyjście = new Typ[0];
-        _ustawienia = new Dictionary<string, string>();
-        _ustawienia.Add("głośność", "1.0");
+        ustawienia.put("głośność", "1.0");
         }
 static public void graniestart()
         {
