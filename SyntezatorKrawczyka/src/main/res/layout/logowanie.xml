@@ -1,46 +1,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
 
-    > <ScrollView
+    >
+
+    <ScrollView
 
         android:id="@+id/login_form"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-
-
-    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:id="@+id/logowanie"
-        android:orientation="vertical">
+        android:layout_height="fill_parent">
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/prompt_email" />
+            android:padding="16dp"
+            android:id="@+id/logowanie"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword" />
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@String/prompt_email" />
 
-        <Button android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/action_sign_in_register"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:layout_gravity="right" />
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@String/prompt_password"
+                android:inputType="textPassword" />
 
-    </LinearLayout>
-</ScrollView>
+            <Button
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@String/action_sign_in_register"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -16,22 +16,22 @@ public class Base64 {
     public static String encode(String string) {
 
         String encoded = "";
-        byte[] stringArray;
+        byte[] StringArray;
         try {
-            stringArray = string.getBytes("UTF-8");  // use appropriate encoding string!
+            StringArray = string.getBytes("UTF-8");  // use appropriate encoding String!
         } catch (Exception ignored) {
-            stringArray = string.getBytes();  // use locale default rather than croak
+            StringArray = string.getBytes();  // use locale default rather than croak
         }
         // determine how many padding bytes to add to the output
-        int paddingCount = (3 - (stringArray.length % 3)) % 3;
+        int paddingCount = (3 - (StringArray.length % 3)) % 3;
         // add any necessary padding to the input
-        stringArray = zeroPad(stringArray.length + paddingCount, stringArray);
+        StringArray = zeroPad(StringArray.length + paddingCount, StringArray);
         // process 3 bytes at a time, churning out 4 output bytes
         // worry about CRLF insertions later
-        for (int i = 0; i < stringArray.length; i += 3) {
-            int j = ((stringArray[i] & 0xff) << 16) +
-                    ((stringArray[i + 1] & 0xff) << 8) +
-                    (stringArray[i + 2] & 0xff);
+        for (int i = 0; i < StringArray.length; i += 3) {
+            int j = ((StringArray[i] & 0xff) << 16) +
+                    ((StringArray[i + 1] & 0xff) << 8) +
+                    (StringArray[i + 2] & 0xff);
             encoded = encoded + base64code.charAt((j >> 18) & 0x3f) +
                     base64code.charAt((j >> 12) & 0x3f) +
                     base64code.charAt((j >> 6) & 0x3f) +
@@ -42,6 +42,7 @@ public class Base64 {
                 paddingCount) + "==".substring(0, paddingCount));
 
     }
+
     public static String splitLines(String string) {
 
         String lines = "";
@@ -54,6 +55,7 @@ public class Base64 {
         return lines;
 
     }
+
     public static void main(String[] args) {
 
         for (int i = 0; i < args.length; i++) {

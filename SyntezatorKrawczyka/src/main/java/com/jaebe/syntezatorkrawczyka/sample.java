@@ -1,42 +1,39 @@
 package com.jaebe.syntezatorkrawczyka;
 
-import android.util.Xml;
-
 /**
  * Created by Mateusz on 09.08.14.
  */
-public class sample
-        {
-public String plik;
-public float note;
-public int częstotliwość;
-public float accept;
-public float[][] fala;
-public byte kanały = 1;
-private String p;
+public class sample {
+    public String plik;
+    public float note;
+    public int częstotliwość;
+    public float accept;
+    public float[][] fala;
+    public byte kanały = 1;
+    private String p;
 
-public sample(String p)
+    public sample(String p) {
         {
-        {
-        plik = p;
-        wątekStart w=new wątekStart();
-            w.start();
+            plik = p;
+            // wątekStart w=new wątekStart();//TODO sample
+            //    w.start();
         }
-        }
-        long i = 0;
-public int bitrate;
-            public long getValue(){
-                return i;
-            }
+    }
 
-public long getMax()
-        {
+    long i = 0;
+    public int bitrate;
+
+    public long getValue() {
+        return i;
+    }
+
+    public long getMax() {
         if (fala == null)
-        return 0;
+            return 0;
         return fala[0].length;
-        }
-        }
-            class wątekStart implements Thread {
+    }
+}
+           /* class wątekStart implements Thread {
 
                 @Override
                 public void run() {
@@ -90,4 +87,4 @@ public long getMax()
                     }
                 }
             }
-        }
+        }*/

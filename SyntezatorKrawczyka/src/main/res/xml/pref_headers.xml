@@ -4,14 +4,14 @@
 
     <header
         android:fragment="com.jaebe.syntezatorkrawczyka.Ustawienia$GeneralPreferenceFragment"
-        android:title="@string/pref_header_general" />
+        android:title="@String/pref_header_general" />
 
     <header
         android:fragment="com.jaebe.syntezatorkrawczyka.Ustawienia$NotificationPreferenceFragment"
-        android:title="@string/pref_header_notifications" />
+        android:title="@String/pref_header_notifications" />
 
     <header
         android:fragment="com.jaebe.syntezatorkrawczyka.Ustawienia$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync" />
+        android:title="@String/pref_header_data_sync" />
 
 </preference-headers>

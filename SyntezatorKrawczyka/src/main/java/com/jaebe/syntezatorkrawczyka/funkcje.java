@@ -1,8 +1,5 @@
 package com.jaebe.syntezatorkrawczyka;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 /**
  * Created by Mateusz on 16.08.14.
  */
@@ -176,7 +173,7 @@ public class funkcje {
 
     /* static String sekundy(int p)
     {
-        string ret="";
+        String ret="";
         var sek = (int)(p / plik.Hz);
         var min = sek / 60;
         sek = sek % 60;

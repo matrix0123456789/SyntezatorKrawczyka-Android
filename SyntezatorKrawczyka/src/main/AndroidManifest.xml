@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jaebe.syntezatorkrawczyka"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -10,10 +10,10 @@
 
     <application
         android:allowBackup="true"
-        android:label="Syntezator Krawczyka" >
+        android:label="Syntezator Krawczyka">
         <activity
             android:name="com.jaebe.syntezatorkrawczyka.MainActivity"
-            android:label="Syntezator Krawczyka" >
+            android:label="Syntezator Krawczyka">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,14 +22,12 @@
         </activity>
         <activity
             android:name="com.jaebe.syntezatorkrawczyka.Logowanie"
-            android:label="Logowanie" >
-        </activity>
+            android:label="Logowanie"></activity>
         <activity
             android:name="com.jaebe.syntezatorkrawczyka.Ustawienia"
-            android:label="@string/title_activity_ustawienia" >
-        </activity>
+            android:label="@String/title_activity_ustawienia"></activity>
 
     </application>
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 </manifest>
