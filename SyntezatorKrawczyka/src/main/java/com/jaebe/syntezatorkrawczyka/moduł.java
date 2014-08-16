@@ -22,7 +22,8 @@ public interface moduł
     /// </summary>
     Typ[] getWyjście();
     Hashtable<String,String> getUstawienia();
-    void setUstawienia(Hashtable<String,String> u);
+
+    // void setUstawienia(Hashtable<String,String> u);
     Node getXML();
     void setXML(Node n);
     //Hashtable<String,String> ustawienia=new Hashtable<String,String>();
