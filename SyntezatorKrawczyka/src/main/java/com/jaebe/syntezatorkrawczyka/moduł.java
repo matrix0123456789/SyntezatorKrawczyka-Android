@@ -24,7 +24,7 @@ public interface moduł
     Hashtable<String,String> getUstawienia();
     void setUstawienia(Hashtable<String,String> u);
     Node getXML();
-    void getXML(Node n);
+    void setXML(Node n);
     //Hashtable<String,String> ustawienia=new Hashtable<String,String>();
     //public Node XML =null;
     /*void aktXML()

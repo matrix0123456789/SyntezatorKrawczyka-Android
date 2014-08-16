@@ -37,6 +37,8 @@ public Node xml;
 /// Czy ścieżka jest kopią innej ścierzki
 /// </summary>
 public boolean kopia = false;
+            soundStart sekw;
+            public soundStart getSekw(){return sekw;}
 public sciezka()
         {
         }

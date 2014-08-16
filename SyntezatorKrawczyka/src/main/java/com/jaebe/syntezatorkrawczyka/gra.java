@@ -6,7 +6,7 @@ package com.jaebe.syntezatorkrawczyka;
 public class gra
 {
     public float[] dźwięk;
-    public long zagrano=0;
+    public int zagrano=0;
     public nuta nuta;
     public gra(float[] dźwięk)
     { this.dźwięk = dźwięk; }

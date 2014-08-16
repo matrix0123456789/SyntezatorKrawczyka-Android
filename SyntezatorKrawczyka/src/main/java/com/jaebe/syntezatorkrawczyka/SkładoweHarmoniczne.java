@@ -3,6 +3,7 @@ package com.jaebe.syntezatorkrawczyka;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Created by Mateusz on 09.08.14.
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class SkładoweHarmoniczne implements FalaNiestandardowa
         {
 
-public ArrayList<Integer> gpgpu
+/*public ArrayList<Integer> gpgpu
         {
         get
         {
@@ -21,51 +22,50 @@ public ArrayList<Integer> gpgpu
         }
         return dane;
         }
-        }
-public List<float> Składowe = new List<float>();
-public string nazwa { get; set; }
-public XmlNode xml
+        }*/
+public ArrayList<Float> Składowe = new ArrayList<Float>();
+public String nazwa;
+public Node getXml()
         {
-        get
         {
-        var ret = Statyczne.otwartyplik.xml.CreateElement("wave");
-        var atrTyp = Statyczne.otwartyplik.xml.CreateAttribute("type");
-        atrTyp.Value = "skladoweharmoniczne";
-        ret.getAttributes().Append(atrTyp);
+        Node ret = Statyczne.otwartyplik.xml.createElement("wave");
+        Node atrTyp = Statyczne.otwartyplik.xml.createAttribute("type");
+        atrTyp.setNodeValue("skladoweharmoniczne");
+        ret.getAttributes().setNamedItem(atrTyp);
         if (nazwa != null)
         {
-        var atrNazwa = Statyczne.otwartyplik.xml.CreateAttribute("name");
-        atrNazwa.Value = nazwa;
-        ret.getAttributes().Append(atrNazwa);
+        Node atrNazwa = Statyczne.otwartyplik.xml.createAttribute("name");
+        atrNazwa.setNodeValue( nazwa);
+        ret.getAttributes().setNamedItem(atrNazwa);
         }
-        for (var i = 0; i < Składowe.Count; i++)
+        for (int i = 0; i < Składowe.size(); i++)
         {
-        var skl = Statyczne.otwartyplik.xml.CreateElement("skladowa");
-        var atrNr = Statyczne.otwartyplik.xml.CreateAttribute("number");
-        atrNr.Value = i.ToString();
-        skl.getAttributes().Append(atrNr);
-        var atrValue = Statyczne.otwartyplik.xml.CreateAttribute("value");
-        atrValue.Value = Składowe[i].ToString(CultureInfo.InvariantCulture);
-        skl.getAttributes().Append(atrValue);
-        ret.AppendChild(skl);
-        } zapisanePojedyńczePrzebiegi = new Dictionary<short, float[]>();
+        Node skl = Statyczne.otwartyplik.xml.createElement("skladowa");
+        Node atrNr = Statyczne.otwartyplik.xml.createAttribute("number");
+        atrNr.setNodeValue(((Integer) i).toString());
+        skl.getAttributes().setNamedItem(atrNr);
+        Node atrValue = Statyczne.otwartyplik.xml.createAttribute("value");
+        atrValue.setNodeValue(Składowe.get(i).toString());
+        skl.getAttributes().setNamedItem(atrValue);
+        ret.appendChild(skl);
+        } zapisanePojedyńczePrzebiegi = new Hashtable<Short, float[]>();
         return ret;
 
         }
         }
 public SkładoweHarmoniczne()
         {
-        Składowe.Add(1);
-        zapisanePojedyńczePrzebiegi = new Dictionary<short, float[]>();
+        Składowe.add(1f);
+        zapisanePojedyńczePrzebiegi = new Hashtable<Short, float[]>();
         }
 public SkładoweHarmoniczne(Node xml)
         {
 
-        nazwa = xml.getAttributes().GetNamedItem("name").Value;
-        Dictionary<int, float> słownik = new Dictionary<int, float>();
-        for (var i = 0; i < xml.ChildNodes.Count; i++)
+        nazwa = xml.getAttributes().getNamedItem("name").getNodeValue();
+            Hashtable<Integer, Float> słownik = new Hashtable<Integer, Float>();
+        for (int i = 0; i < xml.getChildNodes().getLength(); i++)
         {
-        słownik.Add(int.Parse(xml.ChildNodes[i].Attributes["number"].Value), float.Parse(xml.ChildNodes[i].Attributes["value"].Value, CultureInfo.InvariantCulture));
+        słownik.put(Integer.parseInt(xml.getChildNodes().item(i).getAttributes().getNamedItem("number").getNodeValue()), float.Parse(xml.ChildNodes[i].Attributes["value"].Value, CultureInfo.InvariantCulture));
         }
 
 
@@ -77,9 +77,9 @@ public SkładoweHarmoniczne(Node xml)
         }
 public void czyść()
         {
-        zapisanePojedyńczePrzebiegi = new Dictionary<short, float[]>();
+        zapisanePojedyńczePrzebiegi = new Hashtable<Short, float[]>();
         }
-        Dictionary<short, float[]> zapisanePojedyńczePrzebiegi = new Dictionary<short, float[]>();
+        Hashtable<Short, float[]> zapisanePojedyńczePrzebiegi = new Hashtable<Short, float[]>();
 public float[] generujJedenPrzebieg(long długość)
         {
 

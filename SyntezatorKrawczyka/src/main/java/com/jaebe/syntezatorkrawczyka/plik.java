@@ -31,6 +31,8 @@ public class plik {
     int pusteID = 0;
     public static float Hz = kHz * 1000;
     public ArrayList<jedenSample> sameSample = new ArrayList<jedenSample>();
+
+    public Hashtable<String, sample> wszytskieSamplePliki = new Hashtable<String, sample>();
     public ArrayList<DrumJeden> DrumLista = new ArrayList<DrumJeden>();
     public Hashtable<String, FalaNiestandardowa> fale = new Hashtable<String, FalaNiestandardowa>();
 

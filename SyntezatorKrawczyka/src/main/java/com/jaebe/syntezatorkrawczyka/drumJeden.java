@@ -17,16 +17,16 @@ public class DrumJeden
     public DrumJeden(Node n)
     {
         this.xml = n;
-        wysokość = float.Parse(n.getAttributes().GetNamedItem("note").Value);
-        oktawy = short.Parse(n.getAttributes().GetNamedItem("oktawy").Value);
-        czestotliwosc = float.Parse(n.getAttributes().GetNamedItem("frequency").Value);
+        wysokość = Float.parseFloat(n.getAttributes().getNamedItem("note").getNodeValue());
+        oktawy = Short.parseShort(n.getAttributes().getNamedItem("oktawy").getNodeValue());
+        czestotliwosc = Float.parseFloat(n.getAttributes().getNamedItem("frequency").getNodeValue());
     }
 
     void nowyXML()
 {
-    xml = Statyczne.otwartyplik.xml.CreateElement("drum");
-    xml.getAttributes().Append(Statyczne.otwartyplik.xml.CreateAttribute("note"));
-    xml.getAttributes().Append(Statyczne.otwartyplik.xml.CreateAttribute("sound"));
+    xml = Statyczne.otwartyplik.xml.createElement("drum");
+    xml.getAttributes().setNamedItem(Statyczne.otwartyplik.xml.createAttribute("note"));
+    xml.getAttributes().setNamedItem(Statyczne.otwartyplik.xml.createAttribute("sound"));
 }
 
 }

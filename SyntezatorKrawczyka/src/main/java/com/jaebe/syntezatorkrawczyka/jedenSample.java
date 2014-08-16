@@ -1,5 +1,6 @@
 package com.jaebe.syntezatorkrawczyka;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 
 /**
@@ -8,61 +9,66 @@ import org.w3c.dom.Node;
 public class jedenSample implements  IodDo {
     public sample sample;
     public float głośność = 1;
-    public long delay;
+    public int delay;
     public Node xml;
 
     public jedenSample()
     {
         granie.graniestart();
-        xml = Statyczne.otwartyplik.xml.CreateElement("sample");
-        Statyczne.otwartyplik.xml.DocumentElement.AppendChild(xml);
+        xml = Statyczne.otwartyplik.xml.createElement("sample");
+        Statyczne.otwartyplik.xml.getDocumentElement().appendChild(xml);
     }
 
-    public jedenSample(string x)
-    : this()
+    public jedenSample(String x)
+
     {
+        this();
         if (Statyczne.otwartyplik.wszytskieSamplePliki.containsKey(x))
-            sample = Statyczne.otwartyplik.wszytskieSamplePliki[x];
+            sample = Statyczne.otwartyplik.wszytskieSamplePliki.get(x);
         else
         {
             sample = new sample(x);
-            Statyczne.otwartyplik.wszytskieSamplePliki.add(x, sample);
+            Statyczne.otwartyplik.wszytskieSamplePliki.put(x, sample);
         }
 
-        var atrybut = Statyczne.otwartyplik.xml.CreateAttribute("file");
-        atrybut.Value = x;
-        xml.getAttributes().SetNamedItem(atrybut);
+        Attr atrybut = Statyczne.otwartyplik.xml.createAttribute("file");
+        atrybut.setNodeValue(x);
+        xml.getAttributes().setNamedItem(atrybut);
     }
 
     public jedenSample(Node xml)
-    : this()
-    {
 
+    {
+        this();
         granie.graniestart();
         this.xml = xml;
 
-        if (xml.Attributes["delay"] != null)
+        if (xml.getAttributes().getNamedItem("delay") != null)
         {
-            delay = (long)(float.Parse((xml.Attributes["delay"].Value), CultureInfo.InvariantCulture) * plik.Hz * 60 / plik.tempo);
+            delay = (int)(Float.parseFloat((xml.getAttributes().getNamedItem("delay").getNodeValue())) * plik.Hz * 60 / plik.tempo);
         }
 
-        if (Statyczne.otwartyplik.wszytskieSamplePliki.containsKey(xml.Attributes["file"].Value))
-            sample = Statyczne.otwartyplik.wszytskieSamplePliki[xml.Attributes["file"].Value];
+        if (Statyczne.otwartyplik.wszytskieSamplePliki.containsKey(xml.getAttributes().getNamedItem("file").getNodeValue()))
+            sample = Statyczne.otwartyplik.wszytskieSamplePliki.get(xml.getAttributes().getNamedItem("file").getNodeValue());
         else
         {
-            sample = new sample(xml.Attributes["file"].Value);
-            Statyczne.otwartyplik.wszytskieSamplePliki.add(xml.Attributes["file"].Value, sample);
+            sample = new sample(xml.getAttributes().getNamedItem("file").getNodeValue());
+            Statyczne.otwartyplik.wszytskieSamplePliki.put(xml.getAttributes().getNamedItem("file").getNodeValue(), sample);
         }
     }
-    internal void działaj()
+     void działaj()
     {
 
-        float[,] dane;
+        float[][] dane;
         int dl;
         while (sample.fala == null)
-            Thread.Sleep(100);
-        var l = sample.fala.GetLength(1);
-        var zmianaCzęstotliwości = plik.Hz / sample.częstotliwość;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        int l = sample.fala[0].length;
+        float zmianaCzęstotliwości = plik.Hz / sample.częstotliwość;
         if (zmianaCzęstotliwości == 1)
         {
             dane = sample.fala;
@@ -70,18 +76,18 @@ public class jedenSample implements  IodDo {
         }
         else
         {
-            dl = (int)Math.Ceiling(sample.fala.GetLength(1) * zmianaCzęstotliwości);
-            dane = new float[sample.fala.GetLength(0), dl];
+            dl = (int)Math.ceil(sample.fala[0].length * zmianaCzęstotliwości);
+            dane = new float[sample.fala.length][dl];
             for (byte k = 0; k < sample.kanały; k++)
-                for (var i2 = 0; l > i2; i2++)
+                for (int i2 = 0; l > i2; i2++)
                 {
-                    var dz = (i2) / zmianaCzęstotliwości;
+                    float dz = (i2) / zmianaCzęstotliwości;
                     if (dz + 1 < l)
-                        dane[k, i2] = ((sample.fala[k, (int)Math.Floor(dz)] * ((i2 / zmianaCzęstotliwości) % 1)) + (sample.fala[k, (int)Math.Ceiling(dz)] * (1 - (i2 / zmianaCzęstotliwości) % 1))) * głośność;
+                        dane[k][i2] = ((sample.fala[k][(int)Math.floor(dz)] * ((i2 / zmianaCzęstotliwości) % 1)) + (sample.fala[k][(int)Math.ceil(dz)] * (1 - (i2 / zmianaCzęstotliwości) % 1))) * głośność;
 
-                    else if ((int)Math.Floor(dz) + 1 < l)
+                    else if ((int)Math.floor(dz) + 1 < l)
                 {
-                    dane[k, i2] = (sample.fala[k, (int)Math.Floor(dz)]) * głośność;
+                    dane[k][i2] = (sample.fala[k][(int)Math.floor(dz)]) * głośność;
                 }
                     //debugowanie
 
@@ -105,11 +111,11 @@ public class jedenSample implements  IodDo {
         {
 
 
-            long i = delay;
-            var opt1 = -delay;
+            int i = delay;
+            int opt1 = -delay;
 
-            var opt3 = dl - opt1;
-            try
+            int opt3 = dl - opt1;
+
             {
                     /*if (głośność == 1)
 
@@ -139,33 +145,36 @@ public class jedenSample implements  IodDo {
                 {
                     for (; i < opt3; i++)
                     {
-                        granie.wynik[0, i] += dane[0, i + opt1] * głośność;
-                        granie.wynik[1, i] += dane[0, i + opt1] * głośność;
+                        granie.wynik[0][i] += dane[0][ i + opt1] * głośność;
+                        granie.wynik[1][i] += dane[0][ i + opt1] * głośność;
                     }
                 }
                 else
                 {
                     for (; i < opt3; i++)
                     {
-                        granie.wynik[0, i] += dane[0, i + opt1] * głośność;
-                        granie.wynik[1, i] += dane[1, i + opt1] * głośność;
+                        granie.wynik[0][ i] += dane[0][ i + opt1] * głośność;
+                        granie.wynik[1][ i] += dane[1][ i + opt1] * głośność;
                     }
                 }
-            }
-            catch (IndexOutOfRangeException) { }
+
 
 
         }
 
+    }}
+
+
+    @Override
+    public long getDelay() {
+        return delay;
     }
 
-
-    public long dlugosc
+    public long getDlugosc()
     {
-        get
-        {
+
             if (sample.fala == null)
                 return 0;
-            return sample.fala.GetLongLength(1);
-        }
+            return sample.fala[0].length;
+
     }}

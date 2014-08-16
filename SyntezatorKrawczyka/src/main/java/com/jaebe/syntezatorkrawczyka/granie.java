@@ -1,99 +1,96 @@
 package com.jaebe.syntezatorkrawczyka;
 
+import org.w3c.dom.Node;
+
+import java.util.Date;
+import java.util.Hashtable;
+
 /**
  * Created by Mateusz on 13.08.14.
  */
 public class granie implements moduł
         {
-public static bool[] generować = { true };
-public XmlNode XML { get; set; }
+public static boolean[] generować = { true };
+public Node _XML;
+            public Node getXML(){return _XML;}
+            public void setXML(Node n){_XML=n;}
 static public int o = 4410;
-static System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
-public static Dictionary<long, gra> grają = new Dictionary<long, gra>();
-static bool jest = false;
-static public float[,] wynik = null;
+static Date sw = new Date();
+public static Hashtable<Long, gra> grają = new Hashtable<Long, gra>();
+static boolean jest = false;
+static public float[][] wynik = null;
 static public int graniePrzy = 0, granieMax = 0, granieI = 0;
-static public bool graniePlay = false;
+static public boolean graniePlay = false;
 static public nuta[] granieNuty;
 
 public void akt() { }
-public UserControl UI
-        {
-        get
-        {
-        if (_UI == null)
-        _UI = new GranieUI(this);
-        return _UI;
-        }
-        }
-        UserControl _UI;
 public long symuluj(long wej)
         {
         return wej;
         }
-public static bool grateraz = false;
-        Dictionary<string, string> _ustawienia;
+public static boolean grateraz = false;
+        Hashtable<String, String> _ustawienia;
 static float[] pustaTablica = new float[0];
 public static void grajcale(boolean graj)
         {
         grateraz = false;
         long oz = 0;
         gra[] zz;
-        float[,] fala;
+        float[][] fala;
         if (wynik == null)
         {
-        lock (grają)
+        synchronized (grają)
         {
-        zz = grają.Values.ToArray();
-        } foreach (gra dospr in zz)
+        zz = (gra[])grają.values().toArray();
+        } for (gra dospr : zz)
         {
         if (dospr != null)
         {
         dospr.zagrano = -dospr.nuta.opuznienie;
-        if (dospr.dźwięk.Length - dospr.zagrano > oz)
-        oz = dospr.dźwięk.Length - dospr.zagrano;
+        if (dospr.dźwięk.length - dospr.zagrano > oz)
+        oz = dospr.dźwięk.length - dospr.zagrano;
         }
         }
-        fala = new float[2, oz];
-        for (int x = 0; x < zz.Length; x++)
+        fala = new float[2][(int)oz];
+        for (int x = 0; x < zz.length; x++)
         {
 
-        long i = 0;
+        int i = 0;
         if (zz[x].zagrano < 0 && -zz[x].zagrano < oz)
-        i = -zz[x].zagrano;
+        i = (int)-zz[x].zagrano;
         else if (zz[x].zagrano < 0)
         i = o;
         long max;
-        if (oz < zz[x].dźwięk.LongLength - zz[x].zagrano)
+        if (oz < zz[x].dźwięk.length - zz[x].zagrano)
         max = oz;
         else
-        max = zz[x].dźwięk.LongLength - zz[x].zagrano;
+        max = zz[x].dźwięk.length - zz[x].zagrano;
         if (zz[x].nuta.głośność == 1 && zz[x].nuta.balans0 == 1 && zz[x].nuta.balans1 == 1)
         {
         for (; i < max; i++)
         {
 
 
-        fala[0, i] += zz[x].dźwięk[i + zz[x].zagrano];
-        fala[1, i] += zz[x].dźwięk[i + zz[x].zagrano];
+        fala[0][i] += zz[x].dźwięk[i + zz[x].zagrano];
+        fala[1][i] += zz[x].dźwięk[i + zz[x].zagrano];
 
         }
         }
         else
         {
-        var mn0 = zz[x].nuta.głośność * zz[x].nuta.balans0;
-        var mn1 = zz[x].nuta.głośność * zz[x].nuta.balans1;
-        for (; i < oz && i + zz[x].zagrano < zz[x].dźwięk.LongLength; i++)
+        float mn0 = zz[x].nuta.głośność * zz[x].nuta.balans0;
+            float mn1 = zz[x].nuta.głośność * zz[x].nuta.balans1;
+        for (; i < oz && i + zz[x].zagrano < zz[x].dźwięk.length; i++)
         {
 
 
-        fala[0, i] += zz[x].dźwięk[i + zz[x].zagrano] * mn0;
-        fala[1, i] += zz[x].dźwięk[i + zz[x].zagrano] * mn1;
+        fala[0][i] += zz[x].dźwięk[i + zz[x].zagrano] * mn0;
+        fala[1][i] += zz[x].dźwięk[i + zz[x].zagrano] * mn1;
 
         }
         }
         zz[x].zagrano += oz;
-        if (zz[x].zagrano >= zz[x].dźwięk.Length)
+        if (zz[x].zagrano >= zz[x].dźwięk.length)
         zz[x].nuta.dane = zz[x].dźwięk = null;
 
         }
@@ -115,17 +112,20 @@ public static void grajcale(boolean graj)
             }
             catch (FormatException a)
             {*/
-        grają.Clear();
+        grają.clear();
         if (graj)
         funkcje.graj(fala);
         else
         {
         while (PlikDoZapisu == null)
         {
-        Thread.Sleep(50);
+        try{Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        if (PlikDoZapisu != "")
-        funkcje.zapisz(fala, PlikDoZapisu);
+        }
+      /*  if (!PlikDoZapisu.equals(""))
+        funkcje.zapisz(fala, PlikDoZapisu);*///TODO eksportowanie
         }
         można = true;
         //}
@@ -140,7 +140,7 @@ public static boolean można = true;
 public granie()
         {
         graniestart();
-        ustawienia.put("głośność", "1.0");
+        _ustawienia.put("głośność", "1.0");
         }
 static public void graniestart()
         {
@@ -154,7 +154,7 @@ static public void graniestart()
         //wejs[0] = _ustawienia;
         //wejs[1] = grają;
 
-        data = DateTime.Now;
+        data = new Date();
 
         //System.Threading.ThreadPool.QueueUserWorkItem((Action) =>
         t = new System.Threading.Timer((action) =>
@@ -163,8 +163,8 @@ static public void graniestart()
         }, data, 10, 10);
         }
         }
-public static object grajRazLock = new object();
-public static bool teraz = false;
+public static Object grajRazLock = new Object();
+public static boolean teraz = false;
 public static void grajRazCale()
         {
         //Thread.Sleep(10);
@@ -177,43 +177,47 @@ public static void grajRazCale()
         {
         if (i == 10)
         return;
-        Thread.Sleep(1);
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        var dataTeraz = DateTime.Now;
-        o = (int)((dataTeraz - data).TotalSeconds * plik.Hz);
+        Date dataTeraz =new Date();
+        o = (int)((dataTeraz.getTime() - data.getTime()) * plik.Hz);//TODO sprawdzić jak działa
 
         if (o > 10000)
         o = 10000;
         data = dataTeraz;
         if (można && liczbaGenerowanych == 0 && (klawiaturaKomputera.wszytskieNuty.Count > 0))
-        lock (grają)
+            synchronized (grają)
         {
         teraz = true;
-        lock (grajRazLock)
+        synchronized (grajRazLock)
         {
         nuta[] wszystNuty;
-        lock (klawiaturaKomputera.wszytskieNuty)
+            synchronized (klawiaturaKomputera.wszytskieNuty)
         {
-        wszystNuty = klawiaturaKomputera.wszytskieNuty.ToArray();
+        wszystNuty = (nuta[])klawiaturaKomputera.wszytskieNuty.toArray();//TODO czy zadziała
         }
-        liczbaGenerowanych += wszystNuty.Length + 1;
-        for (var i = 0; i < wszystNuty.Length; i++)
+        liczbaGenerowanych += wszystNuty.length + 1;
+        for (int i = 0; i < wszystNuty.length; i++)
         {
-        if (grają.ContainsKey(wszystNuty[i].id))
+            if(grają.containsKey(wszystNuty[i].id))
         {
-        if (grają[wszystNuty[i].id].zagrano < 0)
+        if (grają.get(wszystNuty[i].id).zagrano < 0)
         wszystNuty[i].generujOd = 0;
-        else if (grają[wszystNuty[i].id].zagrano < 256)
+        else if (grają.get(wszystNuty[i].id).zagrano < 256)
         {
         wszystNuty[i].generujOd = 0;
-        wszystNuty[i].grajOd = grają[wszystNuty[i].id].zagrano;
+        wszystNuty[i].grajOd = grają.get(wszystNuty[i].id).zagrano;
         }
         else
         {
-        wszystNuty[i].generujOd = grają[wszystNuty[i].id].zagrano - 256;
+        wszystNuty[i].generujOd = grają.get(wszystNuty[i].id).zagrano - 256;
         wszystNuty[i].grajOd = 256;
         }
-        wszystNuty[i].generujDo = grają[wszystNuty[i].id].zagrano + o + 256;
+        wszystNuty[i].generujDo = grają.get(wszystNuty[i].id).zagrano + o + 256;
         }
         else
         wszystNuty[i].generujDo = o + 256;
@@ -249,13 +253,13 @@ public static void grajRazCale()
                                 granieI++;
                             }
                         }*/
-        lock (zmianaLiczGenLock) { liczbaGenerowanych--; }
+        synchronized (zmianaLiczGenLock) { liczbaGenerowanych--; }
         if (liczbaGenerowanych == 0)
 
         grajRaz();
         }
         }
-        if (liczbaGenerowanych == 0 || grają.Count > 0)
+        if (liczbaGenerowanych == 0 || grają.size() > 0)
 
         grajRaz();
         }
@@ -264,26 +268,22 @@ public static void grajRaz()
 
         if (można && liczbaGenerowanych == 0)
         {
-        float[,] fala;
-        lock (grają)
+        float[][] fala;
+        synchronized (grają)
         {
-        lock (klawiaturaKomputera.wszytskieNuty)
+        synchronized (klawiaturaKomputera.wszytskieNuty)
         {
-        var i2 = 0;
-        while (i2 < klawiaturaKomputera.wszytskieNuty.Count)
+        int i2 = 0;
+        while (i2 < klawiaturaKomputera.wszytskieNuty.size())
         {
-        if (klawiaturaKomputera.wszytskieNuty[i2].dane != null)
+        if (klawiaturaKomputera.wszytskieNuty.get(i2).dane != null)
         {
-        if (klawiaturaKomputera.wszytskieNuty[i2].dane.Length == 0)
+        if (klawiaturaKomputera.wszytskieNuty.get(i2).dane.length == 0)
         {
-        klawiaturaKomputera.wszytskieNuty.RemoveAt(i2);
+        klawiaturaKomputera.wszytskieNuty.remove(i2);
         }
         else
         i2++;
-        }
-        else if (klawiaturaKomputera.wszytskieNuty[i2].sekw.GetType() == typeof(InstrumentMidi))
-        {
-        klawiaturaKomputera.wszytskieNuty.RemoveAt(i2);
         }
         else
         i2++;
@@ -295,8 +295,8 @@ public static void grajRaz()
 
         {
         dodatkowy:
-        fala = new float[2, o];
-        var falaLength = o;
+        fala = new float[2][o];
+        int falaLength = o;
                         /*if (MainWindow.gpgpu)
                         {
 
@@ -311,7 +311,7 @@ public static void grajRaz()
         {
 
         gra[] zz = grają.Values.ToArray();
-        var liczIle = 0;
+        int liczIle = 0;
         for (int x = 0; x < zz.Length; x++)
         {
 
@@ -600,8 +600,8 @@ public void działaj(nuta n)
             }*/
         }
 
-public static object zmianaLiczGenLock = new object();
+public static Object zmianaLiczGenLock = new Object();
 
-public static string PlikDoZapisu = null;
+public static String PlikDoZapisu = null;
 
         }
