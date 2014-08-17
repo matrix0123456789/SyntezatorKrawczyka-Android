@@ -398,10 +398,10 @@ public class granie implements moduł {
 
 
                 if (dl > 0) {
-                    if ((Statyczne.bufor.BufferLength - Statyczne.bufor.BufferedBytes) / 4 < dl) {
+                    /*if ((Statyczne.bufor.BufferLength - Statyczne.bufor.BufferedBytes) / 4 < dl) {//TODO bufor
                         czyJeszczeRaz = true;
                         dl = (Statyczne.bufor.BufferLength - Statyczne.bufor.BufferedBytes) / 4;
-                    }
+                    }*/
                     float[][] falaT = new float[2][dl];
                     for (int i = 0; i < dl; i++) {
                         falaT[0][i] = wynik[0][i + graniePrzy];
