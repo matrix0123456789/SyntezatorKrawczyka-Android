@@ -24,6 +24,7 @@ public class funkcje {
             bufor[4 * i + 3] = (byte) Math.floor(liczba / 256f);
             bufor[4 * i + 2] = (byte) (liczba % 256);
         }
+
         /*bufordodaj: TODO bufor
         try
         {

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SyntezatorKrawczyka/SyntezatorKrawczyka.iml" filepath="$PROJECT_DIR$/SyntezatorKrawczyka/SyntezatorKrawczyka.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SyntezatorKrawczykaProject.iml" filepath="$PROJECT_DIR$/SyntezatorKrawczykaProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SyntezatorKrawczyka.iml" filepath="$PROJECT_DIR$/SyntezatorKrawczyka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

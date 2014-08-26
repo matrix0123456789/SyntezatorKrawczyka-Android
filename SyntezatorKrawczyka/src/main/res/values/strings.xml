@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <String name="app_name">Syntezator Krawczyka</String>
-    <String name="hello_world">Hello world!</String>
-    <String name="action_settings">Settings</String>
-
-</resources>
