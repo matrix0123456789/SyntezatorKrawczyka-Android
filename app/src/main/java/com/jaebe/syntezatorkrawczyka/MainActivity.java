@@ -3,13 +3,20 @@ package com.jaebe.syntezatorkrawczyka;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.internal.view.menu.ListMenuItemView;
+import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
+
+import java.util.Date;
 
 
 public class MainActivity extends Activity {
@@ -39,7 +46,7 @@ public class MainActivity extends Activity {
         });
 
     }
-
+int edytowanyDzwiek=0;
     void rysujPrzyciski() {
         TableLayout przyciskiGrid = ((TableLayout) findViewById(R.id.PrzyciskiGrid));
         przyciskiGrid.removeAllViews();
@@ -51,22 +58,57 @@ public class MainActivity extends Activity {
                 Button przyciskRaz = new Button(this);
                 przyciskRaz.setWidth(szerokość);
                 przyciskRaz.setHeight(wysokość);
-                przyciskRaz.setOnClickListener(new View.OnClickListener() {
+                przyciskRaz.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View view) {
-                        if (edytujDźwięk) {
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (edytujDźwięk && event.getAction() == MotionEvent.ACTION_DOWN) {
                             ((TableLayout) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
+                            edytowanyDzwiek=(Integer)v.getTag();
+                            ListView lista= ((ListView) findViewById(R.id.edycjaDzwiekuLista));
+                            for(sound s : Statyczne.otwartyplik.moduły.values())
+                            {
+                                TextView txt=new TextView(getBaseContext());
+                                txt.setText(s.nazwa);
+                                lista.addView(txt);
+                               /* ListMenuItemView ch
+                                lista.addView(ch);*/
+                            }
+
+                        } else if (event.getAction() == MotionEvent.ACTION_DOWN && Statyczne.otwartyplik.DrumLista.size() > ((Integer) v.getTag())) {
+                            DrumJeden jeden = Statyczne.otwartyplik.DrumLista.get((Integer) v.getTag());
+                            if (jeden.sekw != null) {
+
+                                if (jeden.sekw.czyWłączone()) {
+                                    short oktawa = 0;
+
+                                    if (jeden.nuta == null) {
+                                        jeden.nuta = new nuta();
+                                        synchronized ( klawiaturaKomputera.wszytskieNuty){
+                                        klawiaturaKomputera.wszytskieNuty.add(jeden.nuta);}
+                                    }
+                                    jeden.nuta.ilepróbek = jeden.nuta.ilepróbekNaStarcie = plik.Hz / funkcje.częstotliwość((short) 0, jeden.wysokość / 2f);
+                                    jeden.nuta.długość = Integer.MAX_VALUE / 16;
+                                    jeden.nuta.sekw = jeden.sekw;
+                                }
+                            }
+                        } else if (event.getAction() == MotionEvent.ACTION_UP && Statyczne.otwartyplik.DrumLista.size() > ((Integer) v.getTag())) {
+                            DrumJeden jeden = Statyczne.otwartyplik.DrumLista.get((Integer) v.getTag());
+                            if (jeden.nuta != null) {
+                                jeden.nuta.długość = (int) ((System.currentTimeMillis() - jeden.nuta.start.getTime()) * plik.kHz);
+                                jeden.nuta = null;
+                            }
                         }
+                        return false;
                     }
                 });
-                wiersz.setTag((Integer) (i * ilePrzyciskówKolumn + j));
+                przyciskRaz.setTag((Integer) (i * ilePrzyciskówKolumn + j));
                 wiersz.addView(przyciskRaz);
             }
             przyciskiGrid.addView(wiersz);
         }
     }
 
-    public void ustawWymiary(Activity ac) {
+    public void ustawWymiary(View ac) {
 
         ilePrzyciskówKolumn = (short) ((int) Integer.parseInt(((EditText) findViewById(R.id.wymiaryKolumny)).getText().toString()));
         ilePrzyciskówWierszy = (short) ((int) Integer.parseInt(((EditText) findViewById(R.id.wymiaryWiersze)).getText().toString()));

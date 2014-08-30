@@ -7,6 +7,7 @@
     <item name="action_OtworzPlik" type="id"/>
     <item name="action_Logowanie" type="id"/>
     <item name="edycjaDzwieku" type="id"/>
+    <item name="edycjaDzwiekuLista" type="id"/>
     <item name="wymiary" type="id"/><item name="wymiaryKolumny" type="id"/><item name="wymiaryWiersze" type="id"/>
 
 

@@ -6,25 +6,26 @@ package com.jaebe.syntezatorkrawczyka;
 public class funkcje {
 
     static public boolean graj(float[][] fala) {
-        byte[] bufor = new byte[fala.length * fala[0].length * 2];
+        short[] bufor = new short[fala[0].length ];
         for (int i = 0; i < fala[0].length; i++) {
             if (fala[0][i] > 1)
                 fala[0][i] = 1;
             else if (fala[0][i] < -1)
                 fala[0][i] = -1;
-            if (fala[1][i] > 1)
+           /* if (fala[1][i] > 1)
                 fala[1][i] = 1;
             else if (fala[1][i] < -1)
-                fala[1][i] = -1;
-            short liczba;
-            liczba = (short) (fala[0][i] * 32766);
-            bufor[4 * i + 1] = (byte) Math.floor(liczba / 256f);
-            bufor[4 * i] = (byte) (liczba % 256);
-            liczba = (short) (fala[1][i] * Short.MAX_VALUE);
+                fala[1][i] = -1;*/
+            //short liczba;
+            bufor[i] = (short) (fala[0][i] * 32766);
+           // bufor[2 * i + 1] = (byte) Math.floor(liczba / 256f);
+            //bufor[2 * i] = (byte) (liczba % 256);
+            /*liczba = (short) (fala[1][i] * Short.MAX_VALUE);
             bufor[4 * i + 3] = (byte) Math.floor(liczba / 256f);
-            bufor[4 * i + 2] = (byte) (liczba % 256);
+            bufor[4 * i + 2] = (byte) (liczba % 256);*/
         }
-
+granie.Bufor.write(bufor, 0,fala[0].length);
+        granie.Bufor.play();
         /*bufordodaj: TODO bufor
         try
         {

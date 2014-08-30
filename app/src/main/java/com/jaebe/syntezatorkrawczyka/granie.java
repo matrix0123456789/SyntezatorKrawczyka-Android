@@ -1,7 +1,21 @@
 package com.jaebe.syntezatorkrawczyka;
 
+import android.media.AsyncPlayer;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.net.rtp.AudioStream;
+import android.provider.MediaStore;
+
 import org.w3c.dom.Node;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -398,14 +412,19 @@ public class granie implements moduł {
 
 
                 if (dl > 0) {
+
                     /*if ((Statyczne.bufor.BufferLength - Statyczne.bufor.BufferedBytes) / 4 < dl) {//TODO bufor
                         czyJeszczeRaz = true;
                         dl = (Statyczne.bufor.BufferLength - Statyczne.bufor.BufferedBytes) / 4;
                     }*/
-                    float[][] falaT = new float[2][dl];
+                    if(wielkośćBuforu- Bufor.getPlaybackHeadPosition()/4<dl){
+                        czyJeszczeRaz=true;
+                        dl=wielkośćBuforu- Bufor.getPlaybackHeadPosition()/4;
+                    }
+                    float[][] falaT = new float[1][dl];
                     for (int i = 0; i < dl; i++) {
                         falaT[0][i] = wynik[0][i + graniePrzy];
-                        falaT[1][i] = wynik[1][i + graniePrzy];
+                       // falaT[1][i] = wynik[1][i + graniePrzy];
                     }
                     //try {
                     if (funkcje.graj(falaT)) {
@@ -568,7 +587,15 @@ public class granie implements moduł {
     public static Object zmianaLiczGenLock = new Object();
 
     public static String PlikDoZapisu = null;
+    static int wielkośćBuforu;
+    static public AudioTrack Bufor;
+static{
+    wielkośćBuforu= AudioTrack.getMinBufferSize(48000,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT);
+    if(wielkośćBuforu<48000*4)
+        wielkośćBuforu=48000*4;
+    Bufor=new AudioTrack(AudioManager.STREAM_MUSIC,48000, AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT,1024*1024,AudioTrack.MODE_STREAM);
 
+}
 }
 
 class wątekDzialaj1 extends Thread {
