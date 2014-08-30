@@ -217,8 +217,10 @@ public class granie implements moduł {
             }
         }
         Date dataTeraz = new Date();
-        o = (int) ((dataTeraz.getTime() - data.getTime()) * plik.Hz);//TODO sprawdzić jak działa
+        o = (int) ((dataTeraz.getTime() - data.getTime()) * plik.kHz);//TODO sprawdzić jak działa
 
+        if (o > wielkośćBuforu)
+            o = wielkośćBuforu;
         if (o > 10000)
             o = 10000;
         data = dataTeraz;
@@ -306,7 +308,7 @@ public class granie implements moduł {
 
                 {
                     dodatkowy:
-                    fala = new float[2][o];
+                    fala = new float[1][o];
                     int falaLength = o;
                         /*if (MainWindow.gpgpu)
                         {
@@ -321,25 +323,25 @@ public class granie implements moduł {
                         else*/
                     {
 
-                        gra[] zz = (gra[]) grają.values().toArray();
+                        Object[] zz =  grają.values().toArray();
                         int liczIle = 0;
                         for (int x = 0; x < zz.length; x++) {
-
-                            if (zz[x].zagrano > zz[x].nuta.dane.length + zz[x].nuta.generujOd) {
-                                zz[x].nuta.dane = null;
-                                zz[x].dźwięk = null;
-                                grają.remove(zz[x].nuta.id);
+gra zzx=(gra)zz[x];
+                            if (zzx.zagrano > zzx.nuta.dane.length + zzx.nuta.generujOd) {
+                                zzx.nuta.dane = null;
+                                zzx.dźwięk = null;
+                                grają.remove(zzx.nuta.id);
                             } else {
                                 liczIle++;
                                 int i = 0;
-                                if (zz[x].zagrano < 0 && -zz[x].zagrano < o)
-                                    i = -zz[x].zagrano;
-                                else if (zz[x].zagrano < 0)
+                                if (zzx.zagrano < 0 && -zzx.zagrano < o)
+                                    i = -zzx.zagrano;
+                                else if (zzx.zagrano < 0)
                                     i = o;
                                 //else
                                 // i = zz[x].zagrano - zz[x].nuta.generujOd;
-                                int opt1 = zz[x].zagrano - zz[x].nuta.generujOd;
-                                int opt2 = zz[x].dźwięk.length - opt1;
+                                int opt1 = zzx.zagrano - zzx.nuta.generujOd;
+                                int opt2 = zzx.dźwięk.length - opt1;
                                 long opt3;
                                 if (o < opt2 && o < falaLength)
                                     opt3 = o;
@@ -347,32 +349,32 @@ public class granie implements moduł {
                                     opt3 = opt2;
                                 else
                                     opt3 = falaLength;
-                                if (zz[x].nuta.głośność == 1 && zz[x].nuta.balans0 == 1 && zz[x].nuta.balans1 == 1) {
+                                if (zzx.nuta.głośność == 1 && zzx.nuta.balans0 == 1 && zzx.nuta.balans1 == 1) {
                                     if (i < -opt1)
                                         i = -opt1;
                                     for (; i < opt3; i++) {
 
                                         {
-                                            fala[0][i] += zz[x].dźwięk[i + opt1];
-                                            fala[1][i] += zz[x].dźwięk[i + opt1];
+                                            fala[0][i] += zzx.dźwięk[i + opt1];
+                                           // fala[1][i] += zz[x].dźwięk[i + opt1];
                                         }
 
                                     }
                                 } else {
                                     if (i < -opt1)
                                         i = -opt1;
-                                    float mn0 = zz[x].nuta.głośność * zz[x].nuta.balans0;
-                                    float mn1 = zz[x].nuta.głośność * zz[x].nuta.balans1;
+                                    float mn0 = zzx.nuta.głośność;// * zz[x].nuta.balans0;
+                                    //float mn1 = zz[x].nuta.głośność * zz[x].nuta.balans1;
                                     for (; i < opt3; i++) {
 
                                         {
-                                            fala[0][i] += zz[x].dźwięk[i + opt1] * mn0;
-                                            fala[1][i] += zz[x].dźwięk[i + opt1] * mn1;
+                                            fala[0][i] += zzx.dźwięk[i + opt1] * mn0;
+                                           // fala[1][i] += zz[x].dźwięk[i + opt1] * mn1;
                                         }
 
                                     }
                                 }
-                                zz[x].zagrano += o;
+                                zzx.zagrano += o;
                             }
 
 
@@ -591,9 +593,9 @@ public class granie implements moduł {
     static public AudioTrack Bufor;
 static{
     wielkośćBuforu= AudioTrack.getMinBufferSize(48000,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT);
-    if(wielkośćBuforu<48000*4)
-        wielkośćBuforu=48000*4;
-    Bufor=new AudioTrack(AudioManager.STREAM_MUSIC,48000, AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT,1024*1024,AudioTrack.MODE_STREAM);
+    //if(wielkośćBuforu<48000*4)
+    //    wielkośćBuforu=48000*4;
+    Bufor=new AudioTrack(AudioManager.STREAM_MUSIC,48000, AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT,wielkośćBuforu*2,AudioTrack.MODE_STREAM);
 
 }
 }

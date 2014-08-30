@@ -1,6 +1,7 @@
 package com.jaebe.syntezatorkrawczyka;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.internal.view.menu.ListMenuItemView;
@@ -11,7 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -62,16 +65,14 @@ int edytowanyDzwiek=0;
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         if (edytujDźwięk && event.getAction() == MotionEvent.ACTION_DOWN) {
-                            ((TableLayout) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
+                            ((View) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
                             edytowanyDzwiek=(Integer)v.getTag();
-                            ListView lista= ((ListView) findViewById(R.id.edycjaDzwiekuLista));
+                            TableLayout lista= ((TableLayout) findViewById(R.id.edycjaDzwiekuLista));
                             for(sound s : Statyczne.otwartyplik.moduły.values())
                             {
                                 TextView txt=new TextView(getBaseContext());
                                 txt.setText(s.nazwa);
                                 lista.addView(txt);
-                               /* ListMenuItemView ch
-                                lista.addView(ch);*/
                             }
 
                         } else if (event.getAction() == MotionEvent.ACTION_DOWN && Statyczne.otwartyplik.DrumLista.size() > ((Integer) v.getTag())) {

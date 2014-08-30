@@ -45,6 +45,7 @@ public class plik {
                 xml = dBuilder.parse(new InputSource(new StringReader(a)));
 
             } catch (Throwable e) {
+                e.printStackTrace();
                 return;//TODO info o błędzie
             }
             try {
@@ -203,6 +204,7 @@ sound z=(sound)modT[i];
                     DrumLista.add(dr);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
                 //MessageBox.Show(e.ToString(), "Błąd przy przetwarzaniu pliku", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
@@ -211,12 +213,10 @@ sound z=(sound)modT[i];
     }
 
 
-    /* public plik()
+     public plik()
      {
-         URL = null;
-         xml = new XmlDocument();
-         xml.LoadXml("<?xml version=\"1.0\" encoding=\"UTF-8\"?><file></file>");
-     }*/
+         this("<?xml version=\"1.0\" encoding=\"UTF-8\"?><file tempo=\"120\"><sound type=\"syntezator-krawczyka\" id=\"proste\"><module type=\"sekwencer\" id=\"player1\" output=\"oscylator1\" oktawy=\"0\"></module><module type=\"oscylator\" id=\"oscylator1\" output=\"granie1\" typ=\"trójkątna\" balans=\"0\" gladkosc=\"1\" A=\"0\" D=\"0\" S=\"0.2\" R=\"220\"></module><module type=\"granie\" id=\"granie1\"></module></sound><sound type=\"syntezator-krawczyka\" id=\"proste1\"><module type=\"sekwencer\" id=\"player1\" output=\"oscylator1\" oktawy=\"0\" /><module type=\"oscylator\" id=\"oscylator1\" output=\"granie1\" typ=\"prostokątna\" balans=\"0\" gladkosc=\"0.92\" A=\"0\" D=\"0\" S=\"0.2\" R=\"200\" /><module type=\"granie\" id=\"granie1\" /></sound></file>",true);
+     }
     /// <summary>
     /// Wykorzystywane w matodzie zapisz()
     /// </summary>

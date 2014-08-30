@@ -23,7 +23,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentLeft="true"
             android:layout_alignWithParentIfMissing="false" />
-        <TableLayout
+        <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="false"
@@ -33,17 +33,22 @@
             android:layout_alignParentLeft="false"
             android:layout_alignWithParentIfMissing="false"
             android:layout_centerInParent="true"
-            android:visibility="invisible">
-<ListView android:layout_height="50dp"
-    android:layout_width="60dp" android:id="@+id/edycjaDzwiekuLista">
-   </ListView>
+            android:visibility="invisible"><TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+<TableLayout android:layout_height="50dp"
+    android:layout_width="600dp" android:background="#ffddee" android:id="@+id/edycjaDzwiekuLista">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:text="ds" />
+   </TableLayout>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ok"
                 android:id="@+id/edycjaDzwiekuOk" />
-        </TableLayout><TableLayout
+        </TableLayout></ScrollView><TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
