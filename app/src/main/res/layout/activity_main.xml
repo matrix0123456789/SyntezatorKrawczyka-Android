@@ -36,12 +36,10 @@
             android:visibility="invisible"><TableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-<TableLayout android:layout_height="50dp"
-    android:layout_width="600dp" android:background="#ffddee" android:id="@+id/edycjaDzwiekuLista">
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:text="ds" />
-   </TableLayout>
+<TableLayout android:layout_height="wrap_content"
+    android:layout_width="wrap_content" android:minHeight="100dp" android:background="#ffddee" android:id="@+id/edycjaDzwiekuLista">
+
+</TableLayout>
 
             <Button
                 android:layout_width="wrap_content"

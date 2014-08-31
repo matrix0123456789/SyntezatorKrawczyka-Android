@@ -1,8 +1,13 @@
 package com.jaebe.syntezatorkrawczyka;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.internal.view.menu.ListMenuItemView;
 import android.util.AttributeSet;
@@ -10,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -44,7 +50,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                ((TableLayout) findViewById(R.id.edycjaDzwieku)).setVisibility(View.INVISIBLE);
+                ( findViewById(R.id.edycjaDzwieku)).setVisibility(View.INVISIBLE);
             }
         });
 
@@ -68,11 +74,41 @@ int edytowanyDzwiek=0;
                             ((View) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
                             edytowanyDzwiek=(Integer)v.getTag();
                             TableLayout lista= ((TableLayout) findViewById(R.id.edycjaDzwiekuLista));
+                            lista.removeAllViews();
                             for(sound s : Statyczne.otwartyplik.moduły.values())
                             {
+                                TableRow tr=new TableRow(getBaseContext());
                                 TextView txt=new TextView(getBaseContext());
                                 txt.setText(s.nazwa);
-                                lista.addView(txt);
+                                if(Statyczne.otwartyplik.DrumLista.size()>edytowanyDzwiek&&s.sekw==Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw)
+                                    txt.setBackgroundColor(Color.rgb(255,200,100));
+                                //txt.setBackgroundColor(Color.RED);
+                                txt.setTextColor(Color.BLACK);
+                                txt.setPadding(2,5,2,5);
+                               // txt.setContentDescription("opis");
+                                /*txt.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+                                //txt.setLayoutParams(new ViewGroup.LayoutParams(100,100));
+                                txt.setMinWidth(100);
+                                txt.setMinHeight(100);
+                               // tr.setLayoutParams(new ViewGroup.LayoutParams(200,150));
+                                */
+                                tr.addView(txt);
+                                lista.addView(tr);
+                                View.OnClickListener onclick=new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
+                                        {
+                                            Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
+                                        }
+                                        Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw=((sound)v.getTag()).sekw;
+                                        v.setBackgroundColor(Color.rgb(255,200,100));
+                                    }
+                                };
+                                tr.setTag(s);
+                                tr.setOnClickListener(onclick);
+                                txt.setTag(s);
+                                txt.setOnClickListener(onclick);
                             }
 
                         } else if (event.getAction() == MotionEvent.ACTION_DOWN && Statyczne.otwartyplik.DrumLista.size() > ((Integer) v.getTag())) {

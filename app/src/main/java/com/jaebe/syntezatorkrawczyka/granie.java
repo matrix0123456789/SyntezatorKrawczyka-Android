@@ -72,7 +72,7 @@ public class granie implements moduł {
     }
 
     public static boolean grateraz = false;
-    Hashtable<String, String> _ustawienia;
+    Hashtable<String, String> _ustawienia=new Hashtable<String, String>();
     static float[] pustaTablica = new float[0];
 
     public static void grajcale(boolean graj) {
@@ -228,29 +228,30 @@ public class granie implements moduł {
             synchronized (grają) {
                 teraz = true;
                 synchronized (grajRazLock) {
-                    nuta[] wszystNuty;
+                    Object[] wszystNuty;
                     synchronized (klawiaturaKomputera.wszytskieNuty) {
-                        wszystNuty = (nuta[]) klawiaturaKomputera.wszytskieNuty.toArray();//TODO czy zadziała
+                        wszystNuty =  klawiaturaKomputera.wszytskieNuty.toArray();
                     }
                     liczbaGenerowanych += wszystNuty.length + 1;
                     for (int i = 0; i < wszystNuty.length; i++) {
-                        if (grają.containsKey(wszystNuty[i].id)) {
-                            if (grają.get(wszystNuty[i].id).zagrano < 0)
-                                wszystNuty[i].generujOd = 0;
-                            else if (grają.get(wszystNuty[i].id).zagrano < 256) {
-                                wszystNuty[i].generujOd = 0;
-                                wszystNuty[i].grajOd = grają.get(wszystNuty[i].id).zagrano;
+                        nuta wNi=(nuta)wszystNuty[i];
+                        if (grają.containsKey(wNi.id)) {
+                            if (grają.get(wNi.id).zagrano < 0)
+                                wNi.generujOd = 0;
+                            else if (grają.get(wNi.id).zagrano < 256) {
+                                wNi.generujOd = 0;
+                                wNi.grajOd = grają.get(wNi.id).zagrano;
                             } else {
-                                wszystNuty[i].generujOd = grają.get(wszystNuty[i].id).zagrano - 256;
-                                wszystNuty[i].grajOd = 256;
+                                wNi.generujOd = grają.get(wNi.id).zagrano - 256;
+                                wNi.grajOd = 256;
                             }
-                            wszystNuty[i].generujDo = grają.get(wszystNuty[i].id).zagrano + o + 256;
+                            wNi.generujDo = grają.get(wNi.id).zagrano + o + 256;
                         } else
-                            wszystNuty[i].generujDo = o + 256;
-                        wszystNuty[i].grajDo = o + 256;
-                        wszystNuty[i].ilepróbek = wszystNuty[i].ilepróbekNaStarcie;
+                            wNi.generujDo = o + 256;
+                        wNi.grajDo = o + 256;
+                        wNi.ilepróbek = wNi.ilepróbekNaStarcie;
                         wątekDzialaj1 w = new wątekDzialaj1();
-                        w.Action = wszystNuty[i];
+                        w.Action = wNi;
                         w.start();
                     }
                         /*if (graniePlay)
@@ -604,10 +605,15 @@ class wątekDzialaj1 extends Thread {
     public wątekDzialaj1() {
     }
 
-    public nuta Action;
+    public nuta Action=null;
 
     @Override
     public void run() {
+       if(Action==null)
+       {
+           System.out.print("Null w granie wątek\r\n");
+
+       }
         (Action).sekw.działaj((Action));
         synchronized (granie.zmianaLiczGenLock) {
             granie.liczbaGenerowanych--;

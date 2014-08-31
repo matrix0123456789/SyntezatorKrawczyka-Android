@@ -417,10 +417,10 @@ sound z=(sound)modT[i];
     }
 
     void dekoduj2(Node n) {
-        if (n.getAttributes().getNamedItem("type").getNodeValue() == "syntezator-krawczyka") {
+        if (n.getAttributes().getNamedItem("type").getNodeValue().equals("syntezator-krawczyka")) {
             for (int i = 0; i < n.getChildNodes().getLength(); i++) {
                 Node nn = n.getChildNodes().item(i);
-                if (nn.getNodeName() == "module") {
+                if (nn.getNodeName().equals("module")) {
 
                     if (nn.getAttributes().getNamedItem("output") != null) {
                         String[] exp = nn.getAttributes().getNamedItem("output").getNodeValue().split(" ");
