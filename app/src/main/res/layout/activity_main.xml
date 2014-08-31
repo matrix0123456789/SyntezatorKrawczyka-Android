@@ -24,7 +24,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignWithParentIfMissing="false" />
         <ScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="false"
             android:id="@id/edycjaDzwieku"
@@ -34,19 +34,45 @@
             android:layout_alignWithParentIfMissing="false"
             android:layout_centerInParent="true"
             android:visibility="invisible"><TableLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 <TableLayout android:layout_height="wrap_content"
     android:layout_width="wrap_content" android:minHeight="100dp" android:background="#ffddee" android:id="@+id/edycjaDzwiekuLista">
 
 </TableLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oktawa"
+                android:id="@+id/textView2" />
+
+            <SeekBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:max="4"
+                android:progress="2"
+                android:id="@+id/seekBarOktawa" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ton" />
+            <SeekBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:max="12"
+                android:progress="0"
+                android:id="@+id/seekBarTon" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ok"
                 android:id="@+id/edycjaDzwiekuOk" />
-        </TableLayout></ScrollView><TableLayout
+        </TableLayout></ScrollView>
+
+        <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
@@ -97,6 +123,13 @@
                 android:id="@id/wymiaryWiersze"
                 android:layout_column="2" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+        </TableRow>
+
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">

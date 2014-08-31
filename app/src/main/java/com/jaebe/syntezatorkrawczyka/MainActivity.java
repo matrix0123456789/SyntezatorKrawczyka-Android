@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -41,16 +42,56 @@ public class MainActivity extends Activity {
         } catch (Throwable e) {
         }
         setContentView(R.layout.activity_main);
+        TableLayout przyciskiGrid = ((TableLayout) findViewById(R.id.PrzyciskiGrid));
 
-        try {
-            rysujPrzyciski();
-        } catch (Throwable e) {
-        }
+
+                rysujPrzyciski();
+
         ((Button) findViewById(R.id.edycjaDzwiekuOk)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                ( findViewById(R.id.edycjaDzwieku)).setVisibility(View.INVISIBLE);
+                (findViewById(R.id.edycjaDzwieku)).setVisibility(View.INVISIBLE);
+            }
+        });
+        ((SeekBar) findViewById(R.id.seekBarOktawa)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
+                {
+                    Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
+                }
+                Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).oktawy=(short)progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        ((SeekBar) findViewById(R.id.seekBarTon)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
+                {
+                    Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
+                }
+                Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość=(float)progress/2;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
@@ -73,6 +114,13 @@ int edytowanyDzwiek=0;
                         if (edytujDźwięk && event.getAction() == MotionEvent.ACTION_DOWN) {
                             ((View) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
                             edytowanyDzwiek=(Integer)v.getTag();
+
+                            while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
+                            {
+                                Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
+                            }
+                            ((SeekBar) findViewById(R.id.seekBarTon)).setProgress((int)(Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość*2));
+                            ((SeekBar) findViewById(R.id.seekBarOktawa)).setProgress((Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).oktawy));
                             TableLayout lista= ((TableLayout) findViewById(R.id.edycjaDzwiekuLista));
                             lista.removeAllViews();
                             for(sound s : Statyczne.otwartyplik.moduły.values())
@@ -97,10 +145,6 @@ int edytowanyDzwiek=0;
                                 View.OnClickListener onclick=new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
-                                        {
-                                            Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
-                                        }
                                         Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw=((sound)v.getTag()).sekw;
                                         v.setBackgroundColor(Color.rgb(255,200,100));
                                     }
