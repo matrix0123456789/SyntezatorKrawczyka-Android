@@ -8,8 +8,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.jaebe.syntezatorkrawczyka.MainActivity"
-            android:label="Syntezator Krawczyka">
+            android:name=".MainActivity"
+            android:label="Syntezator Krawczyka" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,8 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jaebe.syntezatorkrawczyka.Logowanie"
-            android:label="Logowanie"></activity>
+            android:name=".Logowanie"
+            android:label="Logowanie" />
+        <activity
+            android:name=".EdycjaInstrumentu"
+            android:label="@string/title_activity_edycja_instrumentu" >
+        </activity>
     </application>
 
 </manifest>

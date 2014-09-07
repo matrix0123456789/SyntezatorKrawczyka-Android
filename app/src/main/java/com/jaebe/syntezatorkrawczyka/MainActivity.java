@@ -3,13 +3,13 @@ package com.jaebe.syntezatorkrawczyka;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.internal.view.menu.ListMenuItemView;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -141,6 +141,20 @@ int edytowanyDzwiek=0;
                                // tr.setLayoutParams(new ViewGroup.LayoutParams(200,150));
                                 */
                                 tr.addView(txt);
+                                Button butt=new Button(getBaseContext());
+                                butt.setText("Edytuj");
+                                butt.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        sound instr=((sound)v.getTag());
+
+                                        Intent startAnotherActivity = new Intent(getApplicationContext(), EdycjaInstrumentu.class);
+                                        startAnotherActivity.putExtra("s",instr);
+                                        startActivity(startAnotherActivity);
+                                    }
+                                });
+tr.addView(butt);
+
                                 lista.addView(tr);
                                 View.OnClickListener onclick=new View.OnClickListener() {
                                     @Override
@@ -153,6 +167,7 @@ int edytowanyDzwiek=0;
                                 tr.setOnClickListener(onclick);
                                 txt.setTag(s);
                                 txt.setOnClickListener(onclick);
+                                butt.setTag(s);
                             }
 
                         } else if (event.getAction() == MotionEvent.ACTION_DOWN && Statyczne.otwartyplik.DrumLista.size() > ((Integer) v.getTag())) {
