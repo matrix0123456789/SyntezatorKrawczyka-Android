@@ -344,6 +344,7 @@ gra zzx=(gra)zz[x];
                                 int opt1 = zzx.zagrano - zzx.nuta.generujOd;
                                 int opt2 = zzx.dźwięk.length - opt1;
                                 long opt3;
+                                falaLength=fala[0].length;
                                 if (o < opt2 && o < falaLength)
                                     opt3 = o;
                                 else if (opt2 < falaLength)
@@ -353,14 +354,16 @@ gra zzx=(gra)zz[x];
                                 if (zzx.nuta.głośność == 1 && zzx.nuta.balans0 == 1 && zzx.nuta.balans1 == 1) {
                                     if (i < -opt1)
                                         i = -opt1;
-                                    for (; i < opt3; i++) {
+                                   try{ for (; i < opt3; i++) {
 
                                         {
                                             fala[0][i] += zzx.dźwięk[i + opt1];
                                            // fala[1][i] += zz[x].dźwięk[i + opt1];
                                         }
 
-                                    }
+                                    }}catch(ArrayIndexOutOfBoundsException e){
+                                       e.printStackTrace();
+                                   }
                                 } else {
                                     if (i < -opt1)
                                         i = -opt1;

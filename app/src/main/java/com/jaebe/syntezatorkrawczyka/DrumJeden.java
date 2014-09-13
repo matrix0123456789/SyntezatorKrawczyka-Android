@@ -19,7 +19,13 @@ public class DrumJeden
         this.xml = n;
         wysokość = Float.parseFloat(n.getAttributes().getNamedItem("note").getNodeValue());
         oktawy = Short.parseShort(n.getAttributes().getNamedItem("oktawy").getNodeValue());
-        czestotliwosc = Float.parseFloat(n.getAttributes().getNamedItem("frequency").getNodeValue());
+        if(n.getAttributes().getNamedItem("sound")!=null)
+        {
+           try {
+               sekw = Statyczne.otwartyplik.moduły.get(n.getAttributes().getNamedItem("sound").getNodeValue()).sekw;
+           }catch(Throwable e){}
+        }
+        //czestotliwosc = Float.parseFloat(n.getAttributes().getNamedItem("frequency").getNodeValue());
     }
 
     void nowyXML()

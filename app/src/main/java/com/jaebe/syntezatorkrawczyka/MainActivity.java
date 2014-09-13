@@ -44,8 +44,22 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         TableLayout przyciskiGrid = ((TableLayout) findViewById(R.id.PrzyciskiGrid));
 
+Thread wątek=new Thread(){@Override public void run(){
+       try {
+           while( ((TableLayout) findViewById(R.id.PrzyciskiGrid)).getWidth()==0)
+           currentThread().sleep(10);
+       } catch (InterruptedException e) {
+           e.printStackTrace();
+       }
+    runOnUiThread(new Runnable() {
+        public void run() {
+            rysujPrzyciski();
+        }
+    });
 
-                rysujPrzyciski();
+}};
+        wątek.start();
+
 
         ((Button) findViewById(R.id.edycjaDzwiekuOk)).setOnClickListener(new View.OnClickListener() {
             @Override
