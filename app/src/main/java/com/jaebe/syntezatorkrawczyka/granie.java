@@ -1,21 +1,11 @@
 package com.jaebe.syntezatorkrawczyka;
 
-import android.media.AsyncPlayer;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.net.rtp.AudioStream;
-import android.provider.MediaStore;
 
 import org.w3c.dom.Node;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -72,7 +62,7 @@ public class granie implements moduł {
     }
 
     public static boolean grateraz = false;
-    Hashtable<String, String> _ustawienia=new Hashtable<String, String>();
+    Hashtable<String, String> _ustawienia = new Hashtable<String, String>();
     static float[] pustaTablica = new float[0];
 
     public static void grajcale(boolean graj) {
@@ -172,7 +162,7 @@ public class granie implements moduł {
 
     public granie() {
         graniestart();
-        _ustawienia.put("głośność", "1.0");
+        //_ustawienia.put("głośność", "1.0");
     }
 
     static public void graniestart() {
@@ -230,11 +220,11 @@ public class granie implements moduł {
                 synchronized (grajRazLock) {
                     Object[] wszystNuty;
                     synchronized (klawiaturaKomputera.wszytskieNuty) {
-                        wszystNuty =  klawiaturaKomputera.wszytskieNuty.toArray();
+                        wszystNuty = klawiaturaKomputera.wszytskieNuty.toArray();
                     }
                     liczbaGenerowanych += wszystNuty.length + 1;
                     for (int i = 0; i < wszystNuty.length; i++) {
-                        nuta wNi=(nuta)wszystNuty[i];
+                        nuta wNi = (nuta) wszystNuty[i];
                         if (grają.containsKey(wNi.id)) {
                             if (grają.get(wNi.id).zagrano < 0)
                                 wNi.generujOd = 0;
@@ -324,10 +314,10 @@ public class granie implements moduł {
                         else*/
                     {
 
-                        Object[] zz =  grają.values().toArray();
+                        Object[] zz = grają.values().toArray();
                         int liczIle = 0;
                         for (int x = 0; x < zz.length; x++) {
-gra zzx=(gra)zz[x];
+                            gra zzx = (gra) zz[x];
                             if (zzx.zagrano > zzx.nuta.dane.length + zzx.nuta.generujOd) {
                                 zzx.nuta.dane = null;
                                 zzx.dźwięk = null;
@@ -344,7 +334,7 @@ gra zzx=(gra)zz[x];
                                 int opt1 = zzx.zagrano - zzx.nuta.generujOd;
                                 int opt2 = zzx.dźwięk.length - opt1;
                                 long opt3;
-                                falaLength=fala[0].length;
+                                falaLength = fala[0].length;
                                 if (o < opt2 && o < falaLength)
                                     opt3 = o;
                                 else if (opt2 < falaLength)
@@ -354,16 +344,18 @@ gra zzx=(gra)zz[x];
                                 if (zzx.nuta.głośność == 1 && zzx.nuta.balans0 == 1 && zzx.nuta.balans1 == 1) {
                                     if (i < -opt1)
                                         i = -opt1;
-                                   try{ for (; i < opt3; i++) {
+                                    try {
+                                        for (; i < opt3; i++) {
 
-                                        {
-                                            fala[0][i] += zzx.dźwięk[i + opt1];
-                                           // fala[1][i] += zz[x].dźwięk[i + opt1];
+                                            {
+                                                fala[0][i] += zzx.dźwięk[i + opt1];
+                                                // fala[1][i] += zz[x].dźwięk[i + opt1];
+                                            }
+
                                         }
-
-                                    }}catch(ArrayIndexOutOfBoundsException e){
-                                       e.printStackTrace();
-                                   }
+                                    } catch (ArrayIndexOutOfBoundsException e) {
+                                        e.printStackTrace();
+                                    }
                                 } else {
                                     if (i < -opt1)
                                         i = -opt1;
@@ -373,7 +365,7 @@ gra zzx=(gra)zz[x];
 
                                         {
                                             fala[0][i] += zzx.dźwięk[i + opt1] * mn0;
-                                           // fala[1][i] += zz[x].dźwięk[i + opt1] * mn1;
+                                            // fala[1][i] += zz[x].dźwięk[i + opt1] * mn1;
                                         }
 
                                     }
@@ -423,14 +415,14 @@ gra zzx=(gra)zz[x];
                         czyJeszczeRaz = true;
                         dl = (Statyczne.bufor.BufferLength - Statyczne.bufor.BufferedBytes) / 4;
                     }*/
-                    if(wielkośćBuforu- Bufor.getPlaybackHeadPosition()/4<dl){
-                        czyJeszczeRaz=true;
-                        dl=wielkośćBuforu- Bufor.getPlaybackHeadPosition()/4;
+                    if (wielkośćBuforu - Bufor.getPlaybackHeadPosition() / 4 < dl) {
+                        czyJeszczeRaz = true;
+                        dl = wielkośćBuforu - Bufor.getPlaybackHeadPosition() / 4;
                     }
                     float[][] falaT = new float[1][dl];
                     for (int i = 0; i < dl; i++) {
                         falaT[0][i] = wynik[0][i + graniePrzy];
-                       // falaT[1][i] = wynik[1][i + graniePrzy];
+                        // falaT[1][i] = wynik[1][i + graniePrzy];
                     }
                     //try {
                     if (funkcje.graj(falaT)) {
@@ -595,28 +587,28 @@ gra zzx=(gra)zz[x];
     public static String PlikDoZapisu = null;
     static int wielkośćBuforu;
     static public AudioTrack Bufor;
-static{
-    wielkośćBuforu= AudioTrack.getMinBufferSize(48000,AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT);
-    //if(wielkośćBuforu<48000*4)
-    //    wielkośćBuforu=48000*4;
-    Bufor=new AudioTrack(AudioManager.STREAM_MUSIC,48000, AudioFormat.CHANNEL_OUT_MONO,AudioFormat.ENCODING_PCM_16BIT,wielkośćBuforu*2,AudioTrack.MODE_STREAM);
 
-}
+    static {
+        wielkośćBuforu = AudioTrack.getMinBufferSize(48000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        //if(wielkośćBuforu<48000*4)
+        //    wielkośćBuforu=48000*4;
+        Bufor = new AudioTrack(AudioManager.STREAM_MUSIC, 48000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, wielkośćBuforu * 2, AudioTrack.MODE_STREAM);
+
+    }
 }
 
 class wątekDzialaj1 extends Thread {
     public wątekDzialaj1() {
     }
 
-    public nuta Action=null;
+    public nuta Action = null;
 
     @Override
     public void run() {
-       if(Action==null)
-       {
-           System.out.print("Null w granie wątek\r\n");
+        if (Action == null) {
+            System.out.print("Null w granie wątek\r\n");
 
-       }
+        }
         (Action).sekw.działaj((Action));
         synchronized (granie.zmianaLiczGenLock) {
             granie.liczbaGenerowanych--;

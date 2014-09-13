@@ -1,41 +1,30 @@
 package com.jaebe.syntezatorkrawczyka;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.ClipData;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.util.Date;
 
 
 public class MainActivity extends Activity {
     short ilePrzyciskówKolumn = 4;
     short ilePrzyciskówWierszy = 4;
+    public static Resources resour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        resour = getResources();
         try {
             super.onCreate(savedInstanceState);
 
@@ -44,20 +33,23 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         TableLayout przyciskiGrid = ((TableLayout) findViewById(R.id.PrzyciskiGrid));
 
-Thread wątek=new Thread(){@Override public void run(){
-       try {
-           while( ((TableLayout) findViewById(R.id.PrzyciskiGrid)).getWidth()==0)
-           currentThread().sleep(10);
-       } catch (InterruptedException e) {
-           e.printStackTrace();
-       }
-    runOnUiThread(new Runnable() {
-        public void run() {
-            rysujPrzyciski();
-        }
-    });
+        Thread wątek = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (((TableLayout) findViewById(R.id.PrzyciskiGrid)).getWidth() == 0)
+                        currentThread().sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        rysujPrzyciski();
+                    }
+                });
 
-}};
+            }
+        };
         wątek.start();
 
 
@@ -71,11 +63,10 @@ Thread wątek=new Thread(){@Override public void run(){
         ((SeekBar) findViewById(R.id.seekBarOktawa)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
-                {
+                while (Statyczne.otwartyplik.DrumLista.size() <= edytowanyDzwiek) {
                     Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
                 }
-                Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).oktawy=(short)progress;
+                Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).oktawy = (short) progress;
             }
 
             @Override
@@ -91,11 +82,10 @@ Thread wątek=new Thread(){@Override public void run(){
         ((SeekBar) findViewById(R.id.seekBarTon)).setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
-                {
+                while (Statyczne.otwartyplik.DrumLista.size() <= edytowanyDzwiek) {
                     Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
                 }
-                Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość=(float)progress/2;
+                Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość = (float) progress / 2;
             }
 
             @Override
@@ -110,7 +100,9 @@ Thread wątek=new Thread(){@Override public void run(){
         });
 
     }
-int edytowanyDzwiek=0;
+
+    int edytowanyDzwiek = 0;
+
     void rysujPrzyciski() {
         TableLayout przyciskiGrid = ((TableLayout) findViewById(R.id.PrzyciskiGrid));
         przyciskiGrid.removeAllViews();
@@ -127,27 +119,25 @@ int edytowanyDzwiek=0;
                     public boolean onTouch(View v, MotionEvent event) {
                         if (edytujDźwięk && event.getAction() == MotionEvent.ACTION_DOWN) {
                             ((View) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
-                            edytowanyDzwiek=(Integer)v.getTag();
+                            edytowanyDzwiek = (Integer) v.getTag();
 
-                            while(Statyczne.otwartyplik.DrumLista.size()<=edytowanyDzwiek)
-                            {
+                            while (Statyczne.otwartyplik.DrumLista.size() <= edytowanyDzwiek) {
                                 Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
                             }
-                            ((SeekBar) findViewById(R.id.seekBarTon)).setProgress((int)(Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość*2));
+                            ((SeekBar) findViewById(R.id.seekBarTon)).setProgress((int) (Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość * 2));
                             ((SeekBar) findViewById(R.id.seekBarOktawa)).setProgress((Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).oktawy));
-                            TableLayout lista= ((TableLayout) findViewById(R.id.edycjaDzwiekuLista));
+                            TableLayout lista = ((TableLayout) findViewById(R.id.edycjaDzwiekuLista));
                             lista.removeAllViews();
-                            for(sound s : Statyczne.otwartyplik.moduły.values())
-                            {
-                                TableRow tr=new TableRow(getBaseContext());
-                                TextView txt=new TextView(getBaseContext());
+                            for (sound s : Statyczne.otwartyplik.moduły.values()) {
+                                TableRow tr = new TableRow(getBaseContext());
+                                TextView txt = new TextView(getBaseContext());
                                 txt.setText(s.nazwa);
-                                if(Statyczne.otwartyplik.DrumLista.size()>edytowanyDzwiek&&s.sekw==Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw)
-                                    txt.setBackgroundColor(Color.rgb(255,200,100));
+                                if (Statyczne.otwartyplik.DrumLista.size() > edytowanyDzwiek && s.sekw == Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw)
+                                    txt.setBackgroundColor(Color.rgb(255, 200, 100));
                                 //txt.setBackgroundColor(Color.RED);
                                 txt.setTextColor(Color.BLACK);
-                                txt.setPadding(2,5,2,5);
-                               // txt.setContentDescription("opis");
+                                txt.setPadding(2, 5, 2, 5);
+                                // txt.setContentDescription("opis");
                                 /*txt.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT));
                                 //txt.setLayoutParams(new ViewGroup.LayoutParams(100,100));
                                 txt.setMinWidth(100);
@@ -155,26 +145,26 @@ int edytowanyDzwiek=0;
                                // tr.setLayoutParams(new ViewGroup.LayoutParams(200,150));
                                 */
                                 tr.addView(txt);
-                                Button butt=new Button(getBaseContext());
+                                Button butt = new Button(getBaseContext());
                                 butt.setText("Edytuj");
                                 butt.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        sound instr=((sound)v.getTag());
+                                        sound instr = ((sound) v.getTag());
 
                                         Intent startAnotherActivity = new Intent(getApplicationContext(), EdycjaInstrumentu.class);
-                                        startAnotherActivity.putExtra("s",instr.nazwa);
+                                        startAnotherActivity.putExtra("s", instr.nazwa);
                                         startActivity(startAnotherActivity);
                                     }
                                 });
-tr.addView(butt);
+                                tr.addView(butt);
 
                                 lista.addView(tr);
-                                View.OnClickListener onclick=new View.OnClickListener() {
+                                View.OnClickListener onclick = new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw=((sound)v.getTag()).sekw;
-                                        v.setBackgroundColor(Color.rgb(255,200,100));
+                                        Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).sekw = ((sound) v.getTag()).sekw;
+                                        v.setBackgroundColor(Color.rgb(255, 200, 100));
                                     }
                                 };
                                 tr.setTag(s);
@@ -193,10 +183,11 @@ tr.addView(butt);
 
                                     if (jeden.nuta == null) {
                                         jeden.nuta = new nuta();
-                                        synchronized ( klawiaturaKomputera.wszytskieNuty){
-                                        klawiaturaKomputera.wszytskieNuty.add(jeden.nuta);}
+                                        synchronized (klawiaturaKomputera.wszytskieNuty) {
+                                            klawiaturaKomputera.wszytskieNuty.add(jeden.nuta);
+                                        }
                                     }
-                                    jeden.nuta.ilepróbek = jeden.nuta.ilepróbekNaStarcie = plik.Hz / funkcje.częstotliwość((short) 0, jeden.wysokość / 2f);
+                                    jeden.nuta.ilepróbek = jeden.nuta.ilepróbekNaStarcie = plik.Hz / funkcje.częstotliwość((short) 0, jeden.oktawy * 6 + jeden.wysokość / 2f);
                                     jeden.nuta.długość = Integer.MAX_VALUE / 16;
                                     jeden.nuta.sekw = jeden.sekw;
                                 }

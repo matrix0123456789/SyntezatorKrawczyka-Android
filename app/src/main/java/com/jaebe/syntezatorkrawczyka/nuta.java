@@ -7,7 +7,7 @@ import java.util.Random;
 /// <summary>
 /// Odpowiada pojedyńczej nucie, zawiera informacje i ewentualnie gotowy dźwięk
 /// </summary>
-public class nuta {
+public class nuta implements Cloneable {
     /// <summary>
 /// długość jednego przebiegu fali
 /// </summary>
@@ -71,13 +71,6 @@ public class nuta {
 
     }
 
-    /// <summary>
-/// tworzy klon, ze zmienionym id, nie kopiuje danych dźwiękowych
-/// </summary>
-/// <returns>klon</returns>
-    public Object Clone() throws CloneNotSupportedException {
-        return clone();
-    }
 
     public nuta(double ilepróbek, int długość) {
         this.ilepróbek = ilepróbekNaStarcie = ilepróbek;
@@ -95,12 +88,12 @@ public class nuta {
 
     }
 
-    nuta Clone(short oktawy) throws CloneNotSupportedException {
+    /*nuta Clone(short oktawy) throws CloneNotSupportedException {
         nuta ret = (nuta) clone();
 
         ret.ilepróbek = ret.ilepróbek / (Math.pow(2, oktawy));
         return ret;
-    }
+    }*/
 
     public static int sortuj(nuta a, nuta b) {
         return (int) (a.opuznienie - b.opuznienie);
@@ -109,5 +102,9 @@ public class nuta {
     public static long nowyid() {
         ilenut++;
         return ilenut;
+    }
+
+    public nuta Clone() throws CloneNotSupportedException {
+        return (nuta) clone();
     }
 }

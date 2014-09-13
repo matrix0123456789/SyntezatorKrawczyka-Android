@@ -44,20 +44,21 @@ public class glosnosc implements filtr {
         wyjście[0] = new Typ();
         wyjście[1] = new Typ();
         ustawienia = new Hashtable<String, String>();
-        akt();
+        //akt();
     }
 
-    public long symuluj(long p)
-    {
+    public long symuluj(long p) {
         return wyjście[0].DrógiModół.symuluj(p);
     }
-    public void akt() {
 
-        głośność = Float.parseFloat(ustawienia.get("głośność"));
+    public void akt() {
+        if (ustawienia.containsKey("volume"))
+            głośność = Float.parseFloat(ustawienia.get("volume"));//TODO do poprawy w c# głośność na glosnosc
+        else
+            głośność = 1;
     }
 
-    public void działaj(nuta input)
-    {
+    public void działaj(nuta input) {
 
         // bool ucinanie;
        /* if (ustawienia["ucinanie"] == "true")//uważać, czy nie jest po pogłosie
@@ -76,39 +77,37 @@ public class glosnosc implements filtr {
                     input.dane[i] = input.dane[i] * głośność;
             }
         }
-        else*/ if (głośność != 1)
-        {
-            if (wyjście[0].DrógiModół.getClass() == granie.class)
-            {
+        else*/
+        if (głośność != 1) {
+            if (wyjście[0].DrógiModół.getClass() == granie.class) {
                 input.głośność = input.głośność * głośność;
                     /*for (var i = 0; i < input.dane.Length; i++)
                     {
                         input.dane[i] = input.dane[i];
                     }*/
-            }
-            else
+            } else
             //input.głośność = input.głośność * 0.99f;
             {
-                for (int i = 0; i < input.dane.length; i++)
-                {
+                for (int i = 0; i < input.dane.length; i++) {
                     input.dane[i] = input.dane[i] * głośność;
                 }
             }
         }
         wyjście[0].DrógiModół.działaj(input);
     }
-    public nuta działaj(nuta input, float[] jak)
-    {
+
+    public nuta działaj(nuta input, float[] jak) {
         int iJak = input.generujOd;
-        for (int i = 0; i < input.dane.length; i++)
-        {
+        for (int i = 0; i < input.dane.length; i++) {
             input.dane[i] = input.dane[i] * głośność * jak[(iJak + i) % jak.length];
 
         }
 
         return input;
     }
-    @Override public String toString(){
+
+    @Override
+    public String toString() {
         return "Głośność";
     }
 }

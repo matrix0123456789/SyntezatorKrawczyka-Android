@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -35,14 +36,23 @@ public class plik {
     public ArrayList<DrumJeden> DrumLista = new ArrayList<DrumJeden>();
     public Hashtable<String, FalaNiestandardowa> fale = new Hashtable<String, FalaNiestandardowa>();
 
+
     public plik(String a, boolean czyXML) {
         if (!a.equals("")) {
             this.URL = URLStatyczne = a;
             try {
                 DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                if (czyXML) {
+                    InputSource inpSou = new InputSource(new StringReader(a));
+                    // inpSou.setEncoding("UTF-8");
+                    //Log.i("Kodowanie xml", inpSou.getEncoding());
 
-                xml = dBuilder.parse(new InputSource(new StringReader(a)));
+                    xml = dBuilder.parse(inpSou);
+                } else {
+
+                    xml = dBuilder.parse(new File(a));
+                }
 
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -213,15 +223,28 @@ sound z=(sound)modT[i];
     }
 
 
-     public plik()
-     {
-         this("<?xml version=\"1.0\" encoding=\"UTF-8\"?><file tempo=\"120\"><sound type=\"syntezator-krawczyka\" id=\"proste\"><module type=\"sekwencer\" id=\"player1\" output=\"oscylator1\" oktawy=\"0\"></module><module type=\"oscylator\" id=\"oscylator1\" output=\"granie1\" typ=\"trójkątna\" balans=\"0\" gladkosc=\"1\" A=\"0\" D=\"0\" S=\"0.2\" R=\"220\"></module><module type=\"granie\" id=\"granie1\"></module></sound><sound type=\"syntezator-krawczyka\" id=\"proste1\"><module type=\"sekwencer\" id=\"player1\" output=\"oscylator1\" oktawy=\"0\" /><module type=\"oscylator\" id=\"oscylator1\" output=\"granie1\" typ=\"prostokątna\" balans=\"0\" gladkosc=\"0.92\" A=\"0\" D=\"0\" S=\"0.2\" R=\"200\" /><module type=\"granie\" id=\"granie1\" /></sound>     <sound type=\"syntezator-krawczyka\" id=\"proste2\"><module type=\"sekwencer\" id=\"player1\" output=\"oscylator1\" oktawy=\"0\" /><module type=\"oscylator\" id=\"oscylator1\" output=\"granie1\" typ=\"piłokształtna\" balans=\"0\" gladkosc=\"0\" A=\"0\" D=\"0\" S=\"0.2\" R=\"200\" /><module type=\"granie\" id=\"granie1\" /></sound>" +
-                 "<sound id=\"kom\" type=\"syntezator-krawczyka\"><module type=\"sekwencer\" id=\"sekwencer\" output=\"rozdzielacz0\" oktawy=\"0\" /><module type=\"rozdzielacz\" id=\"rozdzielacz0\" output=\"zmianaWysokości1 zmianaWysokości2 zmianaWysokości3 zmianaWysokości4\" /><module type=\"zmianaWysokości\" id=\"zmianaWysokości1\" output=\"oscylator1\" oktawy=\"3\" tony=\"0\" czestotliwosc=\"0\" /><module type=\"oscylator\" id=\"oscylator1\" output=\"K1\" typ=\"piłokształtna\" balans=\"0\" gladkosc=\"1\" A=\"0\" D=\"0\" S=\"0.4\" R=\"480\" /><module type=\"zmianaWysokości\" id=\"zmianaWysokości2\" output=\"oscylator2\" oktawy=\"2\" tony=\"0\" czestotliwosc=\"0\" /><module type=\"oscylator\" id=\"oscylator2\" output=\"K1\" typ=\"prostokątna\" balans=\"0\" gladkosc=\"0.73\" A=\"0\" D=\"0\" S=\"0.73\" R=\"319\" /><module type=\"zmianaWysokości\" id=\"zmianaWysokości3\" output=\"oscylator3\" oktawy=\"1\" tony=\"0\" czestotliwosc=\"0\" /><module type=\"oscylator\" id=\"oscylator3\" output=\"K1\" typ=\"prostokątna\" balans=\"0\" gladkosc=\"0.82\" A=\"0\" D=\"0\" S=\"0.91\" R=\"200\" /><module type=\"zmianaWysokości\" id=\"zmianaWysokości4\" output=\"oscylator4\" oktawy=\"0\" tony=\"0\" czestotliwosc=\"0\" /><module type=\"oscylator\" id=\"oscylator4\" output=\"K1\" typ=\"prostokątna\" balans=\"0\" gladkosc=\"0.87\" A=\"0\" D=\"0\" S=\"1\" R=\"240\" /><module type=\"rozdzielacz\" id=\"K1\" output=\"Fl1 Fl2 Fl3 Fl4 Fl5 Fl6 Fl7 Fl8\" /><module type=\"flanger\" id=\"Fl1\" output=\"K2\" przesuniecie=\"1.8807224751826\" czestotliwosc=\"0.355420417317851\" /><module type=\"flanger\" id=\"Fl2\" output=\"K2\" przesuniecie=\"0.921643988658508\" czestotliwosc=\"0.106341317345547\" /><module type=\"flanger\" id=\"Fl3\" output=\"K2\" przesuniecie=\"1.47441455231719\" czestotliwosc=\"0.0705085965201764\" /><module type=\"flanger\" id=\"Fl4\" output=\"K2\" przesuniecie=\"0.942795444718933\" czestotliwosc=\"0.603823966627859\" /><module type=\"flanger\" id=\"Fl5\" output=\"K2\" przesuniecie=\"0.682811940406827\" czestotliwosc=\"0.485672074596245\" /><module type=\"flanger\" id=\"Fl6\" output=\"K2\" przesuniecie=\"0.878488223477494\" czestotliwosc=\"1.38444675290233\" /><module type=\"flanger\" id=\"Fl7\" output=\"K2\" przesuniecie=\"1.05191011496443\" czestotliwosc=\"0.859536925731011\" /><module type=\"flanger\" id=\"Fl8\" output=\"K2\" przesuniecie=\"0.806705186519169\" czestotliwosc=\"0.53920367850885\" /><module type=\"glosnosc\" id=\"K2\" output=\"K3\" głośność=\"0.06\" ucinanie=\"false\" ucinanieWartość=\"1.0\" /><module type=\"granie\" id=\"K3\" głośność=\"1.0\" /></sound>" +
-                 "<drum note=\"0\" oktawy=\"0\" sound=\"proste\" /><drum note=\"1\" oktawy=\"0\" sound=\"proste\" /><drum note=\"2\" oktawy=\"0\" sound=\"proste\" /><drum note=\"2.5\" oktawy=\"0\" sound=\"proste\" />" +
-                 "<drum note=\"0\" oktawy=\"-1\" sound=\"proste1\" /><drum note=\"0\" oktawy=\"0\" sound=\"proste1\" /><drum note=\"0\" oktawy=\"1\" sound=\"proste1\" /><drum note=\"0\" oktawy=\"2\" sound=\"proste1\" />" +
-                 "<drum note=\"0\" oktawy=\"-1\" sound=\"sound1\" /><drum note=\"0\" oktawy=\"0\" sound=\"sound1\" /><drum note=\"0\" oktawy=\"1\" sound=\"sound1\" /><drum note=\"0\" oktawy=\"2\" sound=\"sound1\" />" +
-                 "<drum note=\"0\" oktawy=\"0\" sound=\"proste2\" /><drum note=\"1\" oktawy=\"0\" sound=\"proste2\" /><drum note=\"2\" oktawy=\"0\" sound=\"proste2\" /><drum note=\"2.5\" oktawy=\"0\" sound=\"proste2\" /></file>",true);
-     }
+    public plik() {
+
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            //xml=android.content.res.Resources.getSystem().getXml(R.raw.start);
+            xml = dBuilder.parse(MainActivity.resour.openRawResource(R.raw.start));
+
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return;//TODO info o błędzie
+        }
+        try {
+            tempo = Float.parseFloat(xml.getElementsByTagName("file").item(0).getAttributes().getNamedItem("tempo").getNodeValue());
+        } catch (Throwable e) {
+            tempo = 120;
+        }
+        dekoduj();
+    }
+
     /// <summary>
     /// Wykorzystywane w matodzie zapisz()
     /// </summary>
@@ -324,12 +347,11 @@ sound z=(sound)modT[i];
                     } else if (typ.equals("flanger")) {
 
 
-                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new flanger());
+                        moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new flanger());
                     } else if (typ.equals("rozdzielacz")) {
 
 
-
-                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new rozdzielacz());
+                        moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new rozdzielacz());
 
                         /*case "mikser":
 
@@ -344,9 +366,7 @@ sound z=(sound)modT[i];
                     } else if (typ.equals("zmianaWysokości")) {
 
 
-
-
-                            moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new zmianaWysokości());
+                        moduły.get(n.getAttributes().getNamedItem("id").getNodeValue()).put(nn.getAttributes().getNamedItem("id").getNodeValue(), new zmianaWysokości());
                     } else if (typ.equals("glosnosc")) {
 
 

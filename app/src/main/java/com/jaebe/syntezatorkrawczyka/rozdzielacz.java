@@ -93,6 +93,7 @@ public class rozdzielacz implements  moduł {public ArrayList<Typ> wejście = ne
         }
         return ret;
     }
+
     public void działaj(nuta input)
     {
 
@@ -120,7 +121,7 @@ public class rozdzielacz implements  moduł {public ArrayList<Typ> wejście = ne
                         {
                             nuta klon = null;
                             try {
-                                klon = (nuta)input.Clone();
+                                klon = (input).Clone();
 
                             klon.id = klon.id * 0x1000 + i;
                             //klon.dane = new double[klon.dane.Length];
