@@ -23,6 +23,10 @@
             android:name=".EdycjaInstrumentu"
             android:label="@string/title_activity_edycja_instrumentu" >
         </activity>
+        <activity
+            android:name=".pliki"
+            android:label="@string/title_activity_pliki" >
+        </activity>
     </application>
 
 </manifest>

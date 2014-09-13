@@ -351,5 +351,7 @@ public class oscylator implements moduł {
     static final double piRazy2 = 2 * Math.PI;
     float Balans, A, D, S, R, gladkosc;
     typFali typ;
-
+@Override public String toString(){
+        return "Oscylator";
+    }
 }

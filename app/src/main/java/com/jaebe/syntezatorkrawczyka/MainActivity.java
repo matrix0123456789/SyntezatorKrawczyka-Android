@@ -149,7 +149,7 @@ int edytowanyDzwiek=0;
                                         sound instr=((sound)v.getTag());
 
                                         Intent startAnotherActivity = new Intent(getApplicationContext(), EdycjaInstrumentu.class);
-                                        startAnotherActivity.putExtra("s",instr);
+                                        startAnotherActivity.putExtra("s",instr.nazwa);
                                         startActivity(startAnotherActivity);
                                     }
                                 });
