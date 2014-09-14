@@ -108,6 +108,8 @@ public class rozdzielacz implements  moduł {public ArrayList<Typ> wejście = ne
                 {
                    dane= ((flanger)flangery.get(key).get(i2).DrógiModół).działaj(input, dane);
                 }
+                input.dane = dane;
+                key.działaj(input);
             }
             for (int i = 7; i >= 0; i--)
             {
@@ -139,4 +141,14 @@ public class rozdzielacz implements  moduł {public ArrayList<Typ> wejście = ne
                 }
             }
         }}
+
+    @Override
+    public String toString() {
+        return "";
+    }
+
+    @Override
+    public Class UI() {
+        return oscylatorUI.class;
+    }
 }

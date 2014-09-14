@@ -51,6 +51,11 @@ public class flanger implements moduł {
         przesunięciea = Float.parseFloat(ustawienia.get("przesuniecie"));
     }
 
+    @Override
+    public Class UI() {
+        return oscylatorUI.class;
+    }
+
     public long symuluj(long p) {
         return wyjście[0].DrógiModół.symuluj(p);
     }
@@ -118,5 +123,10 @@ public class flanger implements moduł {
                 wyjście[0].DrógiModół.działaj(input);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Flanger";
     }
 }

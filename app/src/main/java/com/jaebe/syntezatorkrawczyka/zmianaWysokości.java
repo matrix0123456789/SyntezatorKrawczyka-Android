@@ -63,8 +63,18 @@ public class zmianaWysokości implements moduł {
         tony = Float.parseFloat(ustawienia.get("tony"));
     }
 
+    @Override
+    public Class UI() {
+        return null;
+    }
+
     public long symuluj(long p)
     {
         return wyjście[0].DrógiModół.symuluj(p);
+    }
+
+    @Override
+    public String toString() {
+        return "Zmiana Wysokości";
     }
 }

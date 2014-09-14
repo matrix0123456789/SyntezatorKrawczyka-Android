@@ -10,22 +10,25 @@ import java.util.Hashtable;
  */ /// <summary>
 /// interfejs dla każdego modułu (oscylator, filtry itd.)
 /// </summary>
-public interface moduł
-{
-   /* UserControl UI
-    {
-        get;
-    }*/
+public interface moduł {
+    /* UserControl UI
+     {
+         get;
+     }*/
     ArrayList<Typ> getWejście();
+
     /// <summary>
     /// Elementy, do których dalej będą przekazywane dane
     /// </summary>
     Typ[] getWyjście();
-    Hashtable<String,String> getUstawienia();
+
+    Hashtable<String, String> getUstawienia();
 
     // void setUstawienia(Hashtable<String,String> u);
     Node getXML();
+
     void setXML(Node n);
+
     //Hashtable<String,String> ustawienia=new Hashtable<String,String>();
     //public Node XML =null;
     /*void aktXML()
@@ -42,4 +45,6 @@ public interface moduł
     long symuluj(long p);
 
     void akt();
+
+    Class UI();
 }

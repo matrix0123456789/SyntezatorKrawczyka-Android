@@ -108,10 +108,17 @@ public class MainActivity extends Activity {
         przyciskiGrid.removeAllViews();
         int szerokość = przyciskiGrid.getWidth() / ilePrzyciskówKolumn;
         int wysokość = przyciskiGrid.getHeight() / ilePrzyciskówWierszy;
+
+        while (Statyczne.otwartyplik.DrumLista.size() <= ilePrzyciskówKolumn * ilePrzyciskówWierszy) {
+            Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
+        }
         for (short i = 0; i < ilePrzyciskówWierszy; i++) {
             TableRow wiersz = new TableRow(this);
             for (short j = 0; j < ilePrzyciskówKolumn; j++) {
                 Button przyciskRaz = new Button(this);
+                if (Statyczne.otwartyplik.DrumLista.get(i * ilePrzyciskówKolumn + j).sekw != null) {
+                    przyciskRaz.setBackgroundColor(Color.rgb(255, 0, 0));
+                }
                 przyciskRaz.setWidth(szerokość);
                 przyciskRaz.setHeight(wysokość);
                 przyciskRaz.setOnTouchListener(new View.OnTouchListener() {
@@ -121,9 +128,7 @@ public class MainActivity extends Activity {
                             ((View) findViewById(R.id.edycjaDzwieku)).setVisibility(View.VISIBLE);
                             edytowanyDzwiek = (Integer) v.getTag();
 
-                            while (Statyczne.otwartyplik.DrumLista.size() <= edytowanyDzwiek) {
-                                Statyczne.otwartyplik.DrumLista.add(new DrumJeden());
-                            }
+
                             ((SeekBar) findViewById(R.id.seekBarTon)).setProgress((int) (Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).wysokość * 2));
                             ((SeekBar) findViewById(R.id.seekBarOktawa)).setProgress((Statyczne.otwartyplik.DrumLista.get(edytowanyDzwiek).oktawy));
                             TableLayout lista = ((TableLayout) findViewById(R.id.edycjaDzwiekuLista));

@@ -59,19 +59,22 @@
         <module type="granie" id="K3" />
     </sound>
     <drum note="0" oktawy="0" sound="proste" />
-    <drum note="1" oktawy="0" sound="proste" />
-    <drum note="2" oktawy="0" sound="proste" />
-    <drum note="2.5" oktawy="0" sound="proste" />
-    <drum note="0" oktawy="-1" sound="proste1" />
+    <drum note="0" oktawy="1" sound="proste" />
+    <drum note="0" oktawy="2" sound="proste" />
+    <drum note="0" oktawy="3" sound="proste" />
+
     <drum note="0" oktawy="0" sound="proste1" />
     <drum note="0" oktawy="1" sound="proste1" />
     <drum note="0" oktawy="2" sound="proste1" />
-    <drum note="0" oktawy="-1" sound="sound1" />
-    <drum note="0" oktawy="0" sound="sound1" />
-    <drum note="0" oktawy="1" sound="sound1" />
-    <drum note="0" oktawy="2" sound="sound1" />
+    <drum note="0" oktawy="3" sound="proste1" />
+
     <drum note="0" oktawy="0" sound="proste2" />
-    <drum note="1" oktawy="0" sound="proste2" />
-    <drum note="2" oktawy="0" sound="proste2" />
-    <drum note="2.5" oktawy="0" sound="proste2" />
+    <drum note="0" oktawy="1" sound="proste2" />
+    <drum note="0" oktawy="2" sound="proste2" />
+    <drum note="0" oktawy="3" sound="proste2" />
+
+    <drum note="0" oktawy="-1" sound="kom" />
+    <drum note="0" oktawy="0" sound="kom" />
+    <drum note="0" oktawy="1" sound="kom" />
+    <drum note="0" oktawy="2" sound="kom" />
 </file>

@@ -110,4 +110,9 @@ public class glosnosc implements filtr {
     public String toString() {
         return "Głośność";
     }
+
+    @Override
+    public Class UI() {
+        return oscylatorUI.class;
+    }
 }

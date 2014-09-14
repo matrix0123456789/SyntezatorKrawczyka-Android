@@ -1,12 +1,16 @@
 package com.jaebe.syntezatorkrawczyka;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.Enumeration;
 
 
 public class EdycjaInstrumentu extends ActionBarActivity {
@@ -21,10 +25,34 @@ public class EdycjaInstrumentu extends ActionBarActivity {
         TableLayout lista= ((TableLayout) findViewById(R.id.edycjaInstrLista));
         for(moduł x : instr.values())
         {
+            if (x.toString().length() == 0)
+                continue;
             TableRow tr=new TableRow(getBaseContext());
             TextView txt=new TextView(getBaseContext());
             txt.setText(x.toString());
+            txt.setMinHeight(35);
             tr.addView(txt);
+            tr.setTag(x);
+            tr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Class c = ((moduł) v.getTag()).UI();
+                    Intent startAnotherActivity = new Intent(getApplicationContext(), c);
+                    startAnotherActivity.putExtra("s", getIntent().getStringExtra("s"));
+                    Enumeration<String> klucze = instr.keys();
+                    while (true) {
+                        String k = klucze.nextElement();
+                        if (k == null)
+                            break;
+                        if (instr.get(k) == v.getTag()) {
+
+                            startAnotherActivity.putExtra("m", k);
+                            break;
+                        }
+                    }
+                    startActivity(startAnotherActivity);
+                }
+            });
             lista.addView(tr);
         }
     }

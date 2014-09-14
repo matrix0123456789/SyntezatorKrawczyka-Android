@@ -78,4 +78,13 @@ public class sekwencer implements moduł, soundStart {
             return true;
     }
 
+    @Override
+    public String toString() {
+        return "Sekwencer";
+    }
+
+    @Override
+    public Class UI() {
+        return oscylatorUI.class;
+    }
 }

@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_edycja_instrumentu">EdycjaInstrumentu</string>
     <string name="title_activity_pliki">pliki</string>
+    <string name="title_activity_oscylator_ui">Oscylator</string>
 
 </resources>

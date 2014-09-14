@@ -80,6 +80,11 @@ public class oscylator implements moduł {
         }
     }
 
+    @Override
+    public Class UI() {
+        return oscylatorUI.class;
+    }
+
     /// <summary>
     /// Zawiera wynik funkcji generujJedenPrzebieg zapisany w celu optymalizacji
     /// </summary>

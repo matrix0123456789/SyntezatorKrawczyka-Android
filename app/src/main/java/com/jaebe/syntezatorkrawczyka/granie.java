@@ -19,6 +19,11 @@ public class granie implements moduł {
     public static boolean[] generować = {true};
     public Node _XML;
 
+    @Override
+    public String toString() {
+        return "";
+    }
+
     public ArrayList<Typ> wejście = new ArrayList<Typ>();
 
     public ArrayList<Typ> getWejście() {
@@ -55,6 +60,11 @@ public class granie implements moduł {
     static public nuta[] granieNuty;
 
     public void akt() {
+    }
+
+    @Override
+    public Class UI() {
+        return null;
     }
 
     public long symuluj(long wej) {
@@ -617,4 +627,6 @@ class wątekDzialaj1 extends Thread {
 
             granie.grajRaz();
     }
+
+
 }
